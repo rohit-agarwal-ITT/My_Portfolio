@@ -1,0 +1,32 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './pages/about.component';
+import { SkillsComponent } from './pages/skills.component';
+import { ProjectsComponent } from './pages/projects.component';
+import { ExperienceComponent } from './pages/experience.component';
+import { ContactComponent } from './pages/contact.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    AboutComponent,
+    SkillsComponent,
+    ProjectsComponent,
+    ExperienceComponent,
+    ContactComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

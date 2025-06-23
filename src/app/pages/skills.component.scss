@@ -1,0 +1,42 @@
+section {
+  h1 {
+    color: #22223b;
+    margin-bottom: 1rem;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      background: #c9ada7;
+      color: #22223b;
+      display: inline-block;
+      margin: 0.3rem 0.5rem 0.3rem 0;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+  }
+  .skill {
+    margin-bottom: 1.2rem;
+    span {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      color: #4a4e69;
+    }
+    .progress-bar-bg {
+      background: #e0e0e0;
+      border-radius: 20px;
+      height: 14px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, #4a4e69, #9a8c98);
+      height: 100%;
+      border-radius: 20px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(.35,0,.25,1);
+    }
+  }
+} 

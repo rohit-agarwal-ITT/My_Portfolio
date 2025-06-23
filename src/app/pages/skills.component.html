@@ -1,0 +1,9 @@
+<section>
+  <h1>Skills</h1>
+  <div class="skill" *ngFor="let skill of skills">
+    <span>{{ skill.name }}</span>
+    <div class="progress-bar-bg">
+      <div class="progress-bar" [ngStyle]="{ width: skill.level + '%' }"></div>
+    </div>
+  </div>
+</section> 

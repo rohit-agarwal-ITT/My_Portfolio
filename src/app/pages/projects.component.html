@@ -1,0 +1,13 @@
+<section @projectAnimation>
+  <h1>Projects</h1>
+  <div class="projects">
+    <div class="project-card" *ngFor="let project of projects">
+      <h2>{{ project.title }}</h2>
+      <p>{{ project.description }}</p>
+      <div class="tech-stack">
+        <span class="tech-tag" *ngFor="let tech of project.tech">{{ tech }}</span>
+      </div>
+      <a href="{{ project.link }}" class="project-link">View Project</a>
+    </div>
+  </div>
+</section> 

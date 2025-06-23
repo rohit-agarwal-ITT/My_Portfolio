@@ -1,0 +1,40 @@
+section {
+  h1 {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  
+  .about-content {
+    .intro {
+      color: var(--secondary-color);
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+    
+    .about-list {
+      list-style: none;
+      padding: 0;
+      
+      li {
+        background: var(--card-bg);
+        padding: 1rem 1.5rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px var(--shadow);
+        color: var(--text-color);
+        font-weight: 500;
+        border-left: 4px solid var(--primary-color);
+        transition: transform 0.2s, box-shadow 0.2s;
+        
+        &:hover {
+          transform: translateX(5px);
+          box-shadow: 0 4px 16px var(--shadow);
+        }
+      }
+    }
+  }
+} 
