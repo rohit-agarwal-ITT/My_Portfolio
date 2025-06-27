@@ -312,23 +312,42 @@
 }
 
 .close-btn {
-  margin-left: auto;
-  background: none;
-  border: 2px solid #b3c6e0;
-  border-radius: 0.5rem;
-  color: #1e3c72;
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s, color 0.2s;
-}
-.close-btn:hover {
-  border-color: var(--primary-color, #0072ff);
-  color: var(--primary-color, #0072ff);
-  background: rgba(0,114,255,0.08);
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 8px rgba(90, 108, 255, 0.10);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  margin-left: auto;
+
+  i {
+    font-size: 1.5rem;
+    color: var(--primary-color, #5a6cff);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  &:hover, &:focus {
+    background: rgba(90, 108, 255, 0.15);
+    transform: scale(1.08);
+    i {
+      color: #fff;
+      transform: rotate(90deg) scale(1.15);
+    }
+  }
+
+  &:active {
+    background: rgba(90, 108, 255, 0.25);
+    i {
+      color: #fff;
+      transform: rotate(180deg) scale(1.1);
+    }
+  }
 }
 
 .nav-mobile {
