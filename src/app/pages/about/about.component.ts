@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ResumeService, PersonalInfo } from '../services/resume.service';
+import { PersonalInfo, ResumeService } from 'src/app/services/resume.service';
 
 @Component({
   selector: 'app-about',

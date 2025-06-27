@@ -1,4 +1,4 @@
-export * from './about.component';
+export * from './about/about.component';
 export * from './skills.component';
 export * from './projects.component';
 export * from './experience.component';
