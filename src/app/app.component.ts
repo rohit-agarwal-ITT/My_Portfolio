@@ -96,14 +96,18 @@ export class AppComponent implements OnInit {
     document.documentElement.setAttribute('data-theme', this.isDarkMode ? 'dark' : 'light');
   }
 
-  toggleMobileMenu() {
+  toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
+    if (this.isMobileMenuOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
   }
 
-  closeMobileMenu() {
+  closeMobileMenu(): void {
     this.isMobileMenuOpen = false;
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
   }
 
   scrollToTop() {
