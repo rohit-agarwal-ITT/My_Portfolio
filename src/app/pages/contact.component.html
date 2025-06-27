@@ -1,50 +1,158 @@
-<section @formAnimation>
-  <h1>Contact</h1>
-  
-  <div class="success-message" *ngIf="showSuccess" @messageAnimation>
-    <span>✅ Message sent successfully!</span>
+<div class="contact-container">
+  <div class="contact-content">
+    <!-- Header Section -->
+    <div class="contact-header">
+      <h1 class="contact-title">Get In Touch</h1>
+      <p class="contact-subtitle">Let's work together to bring your ideas to life</p>
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="contact-info-section">
+      <div class="info-card">
+        <div class="info-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="info-content">
+          <h3>Email</h3>
+          <p>hello@rohitagarwal.dev</p>
+          <span>I'll respond within 24 hours</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="info-content">
+          <h3>Location</h3>
+          <p>Available Worldwide</p>
+          <span>Remote work friendly</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="info-content">
+          <h3>Response Time</h3>
+          <p>Within 24 Hours</p>
+          <span>Usually much faster</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Contact Form Section -->
+    <div class="contact-form-section">
+      <div class="form-container">
+        <div class="form-header">
+          <h2>Send Me a Message</h2>
+          <p>Tell me about your project and I'll get back to you as soon as possible</p>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" *ngIf="showSuccess" @messageAnimation>
+          <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="success-content">
+            <h3>Message Sent Successfully!</h3>
+            <p>Thank you for reaching out. I'll get back to you soon!</p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form" *ngIf="!showSuccess">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user input-icon"></i>
+                <input 
+                  id="name"
+                  type="text" 
+                  formControlName="name"
+                  placeholder="Enter your full name" 
+                  [class.error]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
+                />
+              </div>
+              <div class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ getErrorMessage('name') }}
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fas fa-envelope input-icon"></i>
+                <input 
+                  id="email"
+                  type="email" 
+                  formControlName="email"
+                  placeholder="Enter your email address" 
+                  [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+                />
+              </div>
+              <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ getErrorMessage('email') }}
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message</label>
+            <div class="input-wrapper">
+              <i class="fas fa-comment input-icon"></i>
+              <textarea 
+                id="message"
+                formControlName="message"
+                placeholder="Tell me about your project, timeline, and any specific requirements..." 
+                rows="6"
+                [class.error]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
+              ></textarea>
+            </div>
+            <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+              <i class="fas fa-exclamation-circle"></i>
+              {{ getErrorMessage('message') }}
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting || contactForm.invalid">
+            <div class="btn-content">
+              <i class="fas" [class.fa-paper-plane]="!isSubmitting" [class.fa-spinner]="isSubmitting" [class.fa-spin]="isSubmitting"></i>
+              <span>{{ isSubmitting ? 'Sending Message...' : 'Send Message' }}</span>
+            </div>
+            <div class="btn-progress" *ngIf="isSubmitting">
+              <div class="progress-bar"></div>
+            </div>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Social Links Section -->
+    <div class="social-section">
+      <h3>Connect With Me</h3>
+      <div class="social-links">
+        <a href="#" class="social-link" target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+          <span>LinkedIn</span>
+        </a>
+        <a href="#" class="social-link" target="_blank" title="GitHub">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="#" class="social-link" target="_blank" title="Instagram">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+        <a href="#" class="social-link" target="_blank" title="Twitter">
+          <i class="fab fa-twitter"></i>
+          <span>Twitter</span>
+        </a>
+      </div>
+    </div>
   </div>
-  
-  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
-    <div class="form-group">
-      <input 
-        type="text" 
-        formControlName="name"
-        placeholder="Your Name" 
-        [class.error]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
-      />
-      <div class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
-        {{ getErrorMessage('name') }}
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <input 
-        type="email" 
-        formControlName="email"
-        placeholder="Your Email" 
-        [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
-      />
-      <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
-        {{ getErrorMessage('email') }}
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <textarea 
-        formControlName="message"
-        placeholder="Your Message" 
-        rows="5"
-        [class.error]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
-      ></textarea>
-      <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
-        {{ getErrorMessage('message') }}
-      </div>
-    </div>
-    
-    <button type="submit" [disabled]="isSubmitting">
-      <span *ngIf="!isSubmitting">Send Message</span>
-      <span *ngIf="isSubmitting">Sending...</span>
-    </button>
-  </form>
-</section> 
+</div> 

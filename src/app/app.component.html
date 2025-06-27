@@ -109,10 +109,18 @@
       <div class="footer-section">
         <h4>Quick Links</h4>
         <div class="footer-links">
-          <a routerLink="/about" class="footer-link">About Me</a>
-          <a routerLink="/projects" class="footer-link">My Work</a>
-          <a routerLink="/contact" class="footer-link">Get In Touch</a>
-          <a href="#" class="footer-link">Download Resume</a>
+          <a routerLink="/about" routerLinkActive="router-link-active" class="footer-link" (click)="scrollToTop()">
+            <span>About Me</span>
+          </a>
+          <a routerLink="/projects" routerLinkActive="router-link-active" class="footer-link" (click)="scrollToTop()">
+            <span>My Work</span>
+          </a>
+          <a routerLink="/contact" routerLinkActive="router-link-active" class="footer-link" (click)="scrollToTop()">
+            <span>Get In Touch</span>
+          </a>
+          <a href="#" class="footer-link" (click)="scrollToTop()">
+            <span>Download Resume</span>
+          </a>
         </div>
       </div>
       

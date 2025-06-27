@@ -294,6 +294,8 @@
   box-shadow: var(--shadow-lg);
   position: relative;
   overflow: hidden;
+  outline: none;
+  user-select: none;
 }
 
 .download-btn::before {
@@ -319,6 +321,32 @@
 
 .download-btn:active {
   transform: translateY(-2px);
+  transition: transform 0.1s ease;
+}
+
+.download-btn:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.download-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: var(--shadow-md);
+}
+
+.download-btn:disabled:hover {
+  transform: none !important;
+  box-shadow: var(--shadow-md);
+}
+
+.download-btn:disabled::before {
+  left: -100%;
 }
 
 .download-btn i {
@@ -477,4 +505,13 @@
 
 /* Staggered animations for social links */
 .social-link:nth-child(1) { animation-delay: 0.1s; }
-.social-link:nth-child(2) { animation-delay: 0.2s; } 
+.social-link:nth-child(2) { animation-delay: 0.2s; }
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+} 

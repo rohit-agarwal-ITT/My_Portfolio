@@ -58,9 +58,9 @@
       </div>
 
       <div class="resume-download">
-        <button class="download-btn" (click)="downloadResume()">
-          <i class="fas fa-download"></i>
-          Download Resume
+        <button class="download-btn" (click)="downloadResume()" [disabled]="isDownloading">
+          <i class="fas" [class.fa-download]="!isDownloading" [class.fa-spinner]="isDownloading" [class.fa-spin]="isDownloading"></i>
+          <span>{{ isDownloading ? 'Downloading...' : 'Download Resume' }}</span>
         </button>
       </div>
     </div>

@@ -106,6 +106,14 @@ export class AppComponent implements OnInit {
     });
   }
 
+  scrollToTopAndNavigate(route: string) {
+    this.scrollToTop();
+    setTimeout(() => {
+      // You can add navigation logic here if needed
+      // For now, just scroll to top
+    }, 100);
+  }
+
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }

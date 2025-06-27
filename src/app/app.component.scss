@@ -252,21 +252,27 @@
 /* Main Content */
 .main-content {
   margin-top: 80px;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px - 400px); /* Account for header and footer */
+  display: flex;
+  flex-direction: column;
 }
 
 .content-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Footer */
 .footer {
-  margin-top: 4rem;
+  margin-top: auto;
   padding: 4rem 0 0 0;
   border-top: 1px solid var(--border-color);
   position: relative;
+  flex-shrink: 0;
 }
 
 .footer::before {
@@ -360,28 +366,71 @@
   color: var(--text-secondary);
   font-weight: 500;
   transition: all var(--transition-normal);
-  padding: 0.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
   position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  background: var(--bg-secondary);
+  border: 2px solid transparent;
+  display: block;
 }
 
 .footer-link::before {
   content: '';
   position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  transition: left var(--transition-normal);
+  z-index: 0;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
   left: 0;
   bottom: 0;
   width: 0;
-  height: 2px;
-  background: var(--gradient-primary);
+  height: 3px;
+  background: var(--gradient-secondary);
   transition: width var(--transition-normal);
+  z-index: 1;
 }
 
-.footer-link:hover {
-  color: var(--primary-color);
+.footer-link:hover,
+.footer-link:active,
+.footer-link.router-link-active {
+  color: white;
   transform: translateX(10px);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
 }
 
-.footer-link:hover::before {
+.footer-link:hover::before,
+.footer-link:active::before,
+.footer-link.router-link-active::before {
+  left: 0;
+}
+
+.footer-link:hover::after,
+.footer-link:active::after,
+.footer-link.router-link-active::after {
   width: 100%;
+}
+
+.footer-link span {
+  position: relative;
+  z-index: 2;
+  color: inherit;
+}
+
+.footer-link:hover span,
+.footer-link:active span,
+.footer-link.router-link-active span {
+  color: white;
 }
 
 /* Social Links */
