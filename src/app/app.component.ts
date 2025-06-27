@@ -117,4 +117,14 @@ export class AppComponent implements OnInit {
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
+
+  downloadResume(event: Event): void {
+    event.preventDefault();
+    const link = document.createElement('a');
+    link.href = 'assets/Rohit_Agarwal_ITT_Resume.pdf';
+    link.download = 'Rohit_Agarwal_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }

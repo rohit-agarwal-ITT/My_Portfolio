@@ -296,11 +296,15 @@
 
 /* Submit Button */
 .submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 2rem;
   background: var(--gradient-primary);
   color: white;
   border: none;
   border-radius: var(--radius-xl);
-  padding: 1.5rem 3rem;
   font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
@@ -329,9 +333,11 @@
 .btn-content {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   position: relative;
   z-index: 2;
+  width: 100%;
 }
 
 .btn-progress {

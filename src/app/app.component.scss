@@ -707,3 +707,37 @@
               border-color var(--transition-normal), 
               box-shadow var(--transition-normal);
 }
+
+.footer-link.download-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 48px;
+  padding: 0 1.5rem;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 12px rgba(0, 114, 255, 0.08);
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  margin-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-link.download-link i {
+  font-size: 1.1rem;
+}
+
+.footer-link.download-link:hover {
+  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(90deg, #0072ff, #00c6ff);
+  box-shadow: 0 4px 20px rgba(0, 114, 255, 0.15);
+  color: #fff;
+}
+
+.footer-link.download-link::before,
+.footer-link.download-link::after {
+  display: none !important;
+}
