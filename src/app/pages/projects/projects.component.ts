@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ResumeService, Project } from '../services/resume.service';
+import { Project, ResumeService } from 'src/app/services/resume.service';
 
 @Component({
   selector: 'app-projects',

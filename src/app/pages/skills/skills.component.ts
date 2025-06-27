@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ResumeService, Skill } from '../services/resume.service';
+import { Skill, ResumeService } from 'src/app/services/resume.service';
 
 @Component({
   selector: 'app-skills',

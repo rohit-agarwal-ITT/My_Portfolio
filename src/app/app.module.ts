@@ -7,10 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './pages/about/about.component';
-import { SkillsComponent } from './pages/skills.component';
-import { ProjectsComponent } from './pages/projects.component';
-import { ExperienceComponent } from './pages/experience.component';
-import { ContactComponent } from './pages/contact.component';
+import { SkillsComponent } from './pages/skills/skills.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
+import { ExperienceComponent } from './pages/experience/experience.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 @NgModule({
   declarations: [
