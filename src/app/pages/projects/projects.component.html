@@ -1,29 +1,21 @@
 <div class="projects-container">
   <div class="projects-content">
     <div class="projects-header">
-      <h1>Projects</h1>
+      <h1 class="gradient-text">Projects</h1>
       <p>Some of my recent work and personal projects</p>
     </div>
 
     <div class="projects-grid" *ngIf="!loading">
-      <div class="project-card" *ngFor="let project of projects">
+      <div class="project-card glass" *ngFor="let project of projects">
+        <div class="project-image" *ngIf="project.image">
+          <img [src]="project.image" [alt]="project.name + ' screenshot'" />
+        </div>
         <div class="project-content">
-          <h3 class="project-title">{{ project.name }}</h3>
+          <h3 class="project-title gradient-text">{{ project.name }}</h3>
           <p class="project-description">{{ project.description }}</p>
           
           <div class="project-tech">
             <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
-          </div>
-          
-          <div class="project-links">
-            <a *ngIf="project.github" [href]="project.github" target="_blank" class="project-link github">
-              <i class="fab fa-github"></i>
-              View Code
-            </a>
-            <a *ngIf="project.live" [href]="project.live" target="_blank" class="project-link live">
-              <i class="fas fa-external-link-alt"></i>
-              Live Demo
-            </a>
           </div>
         </div>
       </div>
