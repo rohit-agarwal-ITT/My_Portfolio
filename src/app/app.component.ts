@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 
@@ -33,15 +33,22 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
     ])
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'portfolio';
   isMobile = false;
   sidebarOpen = false;
   isDarkMode = false;
+  isMobileMenuOpen = false;
+  showScrollToTop = false;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.checkMobile();
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.showScrollToTop = window.scrollY > 300;
   }
 
   ngOnInit() {
@@ -74,12 +81,29 @@ export class AppComponent {
 
   loadTheme() {
     const savedTheme = localStorage.getItem('theme');
-    this.isDarkMode = savedTheme === 'dark';
+    this.isDarkMode = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
     this.applyTheme();
   }
 
-  applyTheme() {
-    document.body.classList.toggle('dark-theme', this.isDarkMode);
+  private applyTheme() {
+    document.documentElement.setAttribute('data-theme', this.isDarkMode ? 'dark' : 'light');
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    document.body.style.overflow = '';
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 
   prepareRoute(outlet: RouterOutlet) {

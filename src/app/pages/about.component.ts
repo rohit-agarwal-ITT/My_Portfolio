@@ -1,30 +1,37 @@
-import { Component } from '@angular/core';
-import { trigger, transition, style, animate, stagger, query } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { ResumeService, PersonalInfo } from '../services/resume.service';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss'],
-  animations: [
-    trigger('staggerAnimation', [
-      transition('* => *', [
-        query(':enter', [
-          style({ opacity: 0, transform: 'translateY(20px)' }),
-          stagger(100, [
-            animate('600ms cubic-bezier(.35,0,.25,1)', 
-              style({ opacity: 1, transform: 'none' })
-            )
-          ])
-        ], { optional: true })
-      ])
-    ])
-  ]
+  styleUrls: ['./about.component.scss']
 })
-export class AboutComponent {
-  aboutItems = [
-    'Passionate software developer with 3+ years of experience',
-    'Specialized in modern web technologies and frameworks',
-    'Love creating intuitive and responsive user interfaces',
-    'Always eager to learn new technologies and best practices'
-  ];
+export class AboutComponent implements OnInit {
+  personalInfo: PersonalInfo | null = null;
+  resumeUrl: string = '';
+
+  constructor(private resumeService: ResumeService) {}
+
+  ngOnInit(): void {
+    this.loadPersonalInfo();
+    this.resumeUrl = this.resumeService.getResumeUrl();
+  }
+
+  loadPersonalInfo(): void {
+    this.resumeService.getPersonalInfo().subscribe(
+      (info) => {
+        this.personalInfo = info;
+      },
+      (error) => {
+        console.error('Error loading personal info:', error);
+      }
+    );
+  }
+
+  downloadResume(): void {
+    const link = document.createElement('a');
+    link.href = this.resumeUrl;
+    link.download = 'Rohit_Agarwal_Resume.pdf';
+    link.click();
+  }
 } 

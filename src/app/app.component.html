@@ -1,36 +1,123 @@
-<div class="container">
-  <aside class="sidebar" [@sidebarAnimation]="isMobile ? (sidebarOpen ? 'open' : 'closed') : 'open'">
-    <div class="profile">
-      <img src="assets/profile.jpg" alt="Profile" class="profile-img" />
-      <h2>Your Name</h2>
-      <p class="bio">Software Developer | Web Enthusiast</p>
+<div class="app-container" [attr.data-theme]="isDarkMode ? 'dark' : 'light'">
+  <!-- Animated Background -->
+  <div class="animated-background">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
     </div>
-    
-    <div class="theme-toggle" (click)="toggleTheme()" [@themeToggle]>
-      <div class="toggle-icon">
-        <span class="sun" *ngIf="!isDarkMode">☀️</span>
-        <span class="moon" *ngIf="isDarkMode">🌙</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header glass">
+    <div class="header-content">
+      <div class="logo">
+        <h1 class="logo-text gradient-text">RA</h1>
+        <span class="logo-subtitle">Portfolio</span>
+      </div>
+      
+      <nav class="nav-desktop">
+        <a routerLink="/about" routerLinkActive="active" class="nav-link">
+          <i class="fas fa-user"></i>
+          <span>About</span>
+        </a>
+        <a routerLink="/skills" routerLinkActive="active" class="nav-link">
+          <i class="fas fa-code"></i>
+          <span>Skills</span>
+        </a>
+        <a routerLink="/projects" routerLinkActive="active" class="nav-link">
+          <i class="fas fa-project-diagram"></i>
+          <span>Projects</span>
+        </a>
+        <a routerLink="/experience" routerLinkActive="active" class="nav-link">
+          <i class="fas fa-briefcase"></i>
+          <span>Experience</span>
+        </a>
+        <a routerLink="/contact" routerLinkActive="active" class="nav-link">
+          <i class="fas fa-envelope"></i>
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
+          <i class="fas" [class.fa-sun]="isDarkMode" [class.fa-moon]="!isDarkMode"></i>
+        </button>
+        
+        <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
-    
-    <nav class="nav">
-      <a routerLink="/about" routerLinkActive="active" (click)="closeSidebar()">About</a>
-      <a routerLink="/skills" routerLinkActive="active" (click)="closeSidebar()">Skills</a>
-      <a routerLink="/projects" routerLinkActive="active" (click)="closeSidebar()">Projects</a>
-      <a routerLink="/experience" routerLinkActive="active" (click)="closeSidebar()">Experience</a>
-      <a routerLink="/contact" routerLinkActive="active" (click)="closeSidebar()">Contact</a>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+    <nav class="nav-mobile">
+      <a routerLink="/about" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+        <i class="fas fa-user"></i>
+        <span>About</span>
+      </a>
+      <a routerLink="/skills" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+        <i class="fas fa-code"></i>
+        <span>Skills</span>
+      </a>
+      <a routerLink="/projects" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+        <i class="fas fa-project-diagram"></i>
+        <span>Projects</span>
+      </a>
+      <a routerLink="/experience" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+        <i class="fas fa-briefcase"></i>
+        <span>Experience</span>
+      </a>
+      <a routerLink="/contact" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+        <i class="fas fa-envelope"></i>
+        <span>Contact</span>
+      </a>
     </nav>
-  </aside>
-  
-  <div class="mobile-menu-btn" *ngIf="isMobile" (click)="toggleSidebar()">
-    <span></span>
-    <span></span>
-    <span></span>
   </div>
-  
-  <div class="overlay" *ngIf="isMobile && sidebarOpen" (click)="closeSidebar()"></div>
-  
+
+  <!-- Main Content -->
   <main class="main-content">
-    <router-outlet @routeAnimations></router-outlet>
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
   </main>
+
+  <!-- Footer -->
+  <footer class="footer glass">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 class="gradient-text">Rohit Agarwal</h3>
+        <p>Software Developer & Problem Solver</p>
+      </div>
+      
+      <div class="footer-section">
+        <div class="social-links">
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <p>&copy; 2024 Rohit Agarwal. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-to-top" (click)="scrollToTop()" [class.visible]="showScrollToTop">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 </div>

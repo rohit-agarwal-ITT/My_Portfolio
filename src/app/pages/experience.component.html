@@ -1,13 +1,36 @@
-<section @timelineAnimation>
-  <h1>Experience</h1>
-  <ul class="timeline">
-    <li *ngFor="let exp of experiences">
-      <div class="exp-header">
-        <strong>{{ exp.title }}</strong>
-        <span class="company">{{ exp.company }}</span>
-        <span class="period">{{ exp.period }}</span>
+<div class="experience-container">
+  <div class="experience-content">
+    <div class="experience-header">
+      <h1>Work Experience</h1>
+      <p>My professional journey and career highlights</p>
+    </div>
+
+    <div class="timeline" *ngIf="!loading">
+      <div class="timeline-item" *ngFor="let experience of experiences">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="experience-header">
+            <h3 class="position">{{ experience.position }}</h3>
+            <h4 class="company">{{ experience.company }}</h4>
+            <span class="duration">{{ experience.duration }}</span>
+          </div>
+          
+          <div class="experience-description">
+            <ul>
+              <li *ngFor="let desc of experience.description">{{ desc }}</li>
+            </ul>
+          </div>
+          
+          <div class="experience-tech">
+            <span class="tech-tag" *ngFor="let tech of experience.technologies">{{ tech }}</span>
+          </div>
+        </div>
       </div>
-      <p>{{ exp.description }}</p>
-    </li>
-  </ul>
-</section> 
+    </div>
+
+    <div class="loading" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading experience...</p>
+    </div>
+  </div>
+</div> 

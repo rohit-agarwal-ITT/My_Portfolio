@@ -1,9 +1,30 @@
-<section>
-  <h1>Skills</h1>
-  <div class="skill" *ngFor="let skill of skills">
-    <span>{{ skill.name }}</span>
-    <div class="progress-bar-bg">
-      <div class="progress-bar" [ngStyle]="{ width: skill.level + '%' }"></div>
+<div class="skills-container">
+  <div class="skills-content">
+    <div class="skills-header">
+      <h1>Skills & Technologies</h1>
+      <p>My technical expertise and proficiency levels</p>
+    </div>
+
+    <div class="skills-body" *ngIf="!loading">
+      <div class="skill-category" *ngFor="let category of skillCategories">
+        <h2 class="category-title">{{ category }}</h2>
+        <div class="skills-grid">
+          <div class="skill-item" *ngFor="let skill of getSkillsByCategory(category)">
+            <div class="skill-info">
+              <span class="skill-name">{{ skill.name }}</span>
+              <span class="skill-level">{{ skill.level }}%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" [style.width.%]="skill.level"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading skills...</p>
     </div>
   </div>
-</section> 
+</div> 
