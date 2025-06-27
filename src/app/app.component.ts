@@ -51,6 +51,13 @@ export class AppComponent implements OnInit {
     this.showScrollToTop = window.scrollY > 300;
   }
 
+  @HostListener('window:resize', [])
+  onWindowResize() {
+    if (window.innerWidth > 768 && this.isMobileMenuOpen) {
+      this.isMobileMenuOpen = false;
+    }
+  }
+
   ngOnInit() {
     this.checkMobile();
     this.loadTheme();
