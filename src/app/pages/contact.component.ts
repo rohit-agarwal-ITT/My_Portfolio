@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
+// @ts-ignore
+import emailjs from 'emailjs-com';
 
 @Component({
   selector: 'app-contact',
@@ -24,7 +26,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
     ])
   ]
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
   contactForm: FormGroup;
   isSubmitting = false;
   showSuccess = false;
@@ -32,29 +34,45 @@ export class ContactComponent {
 
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      message: ['', [Validators.required, Validators.minLength(10)]]
+      message: ['', Validators.required]
     });
   }
 
+  ngOnInit(): void {}
+
+  getErrorMessage(field: string): string {
+    if (field === 'name') return 'Name is required.';
+    if (field === 'email') return 'Valid email is required.';
+    if (field === 'message') return 'Message is required.';
+    return '';
+  }
+
   onSubmit() {
-    if (this.contactForm.valid) {
-      this.isSubmitting = true;
-      
-      // Simulate form submission
-      setTimeout(() => {
-        this.isSubmitting = false;
+    if (this.contactForm.invalid) return;
+    this.isSubmitting = true;
+
+    emailjs.send(
+      'service_3d095nj',    // <-- Replace with your EmailJS Service ID
+      'template_ej5ujzi',   // <-- Replace with your EmailJS Template ID
+      {
+        from_name: this.contactForm.value.name,
+        from_email: this.contactForm.value.email,
+        message: this.contactForm.value.message
+      },
+      'xP-WHpvN68bH-I6Vn'     // <-- Replace with your EmailJS Public Key
+    ).then(
+      (result: any) => {
         this.showSuccess = true;
+        this.isSubmitting = false;
         this.contactForm.reset();
-        
-        setTimeout(() => {
-          this.showSuccess = false;
-        }, 3000);
-      }, 1500);
-    } else {
-      this.markFormGroupTouched();
-    }
+      },
+      (error: any) => {
+        alert('Failed to send message. Please try again later.');
+        this.isSubmitting = false;
+      }
+    );
   }
 
   markFormGroupTouched() {
@@ -63,19 +81,10 @@ export class ContactComponent {
       control?.markAsTouched();
     });
   }
+}
 
-  getErrorMessage(fieldName: string): string {
-    const field = this.contactForm.get(fieldName);
-    if (field?.hasError('required')) {
-      return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} is required`;
-    }
-    if (field?.hasError('email')) {
-      return 'Please enter a valid email address';
-    }
-    if (field?.hasError('minlength')) {
-      const requiredLength = field.getError('minlength').requiredLength;
-      return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} must be at least ${requiredLength} characters`;
-    }
-    return '';
-  }
-} 
+// For auto-reply:
+// 1. In your EmailJS dashboard, go to your template's Auto-Reply tab.
+// 2. Enable Auto-Reply.
+// 3. Set To Email: {{from_email}}
+// 4. Set Subject and Content as desired (see previous instructions). 
