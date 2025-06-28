@@ -13,58 +13,159 @@ export class ResumeService {
 
   constructor(private http: HttpClient) {}
 
-  // ========================================
-  // UPDATE YOUR PERSONAL INFORMATION HERE
-  // ========================================
   getPersonalInfo(): Observable<PersonalInfo> {
     return of({
-      name: 'Rohit Agarwal', // ✅ UPDATE: Your full name
-      title: 'Software Developer', // ✅ UPDATE: Your job title
-      email: 'rohitagarwal516@gmail.com', // ✅ UPDATE: Your real email
-      phone: '+91 8118807991', // ✅ UPDATE: Your real phone number
-      location: 'Jaipur, Rajasthan, India', // ✅ UPDATE: Your city, state, country
-      linkedin: 'http://linkedin.com/in/rohit-agarwal-a92795188', // ✅ UPDATE: Your LinkedIn profile
-      github: 'https://github.com/rohit-agarwal-ITT' // ✅ UPDATE: Your GitHub profile
+      name: 'Rohit Agarwal',
+      title: 'Software Developer',
+      email: 'rohitagarwal516@gmail.com',
+      phone: '+91 8118807991',
+      location: 'Jaipur, Rajasthan, India',
+      linkedin: 'http://linkedin.com/in/rohit-agarwal-a92795188',
+      github: 'https://github.com/rohit-agarwal-ITT'
     });
   }
 
-  // ========================================
-  // UPDATE YOUR SKILLS HERE
-  // ========================================
   getSkills(): Observable<Skill[]> {
     const skills = [
-      // Frontend Skills
-      { name: 'Angular', level: 90, category: 'Frontend' },
-      { name: 'TypeScript', level: 85, category: 'Frontend' },
-      { name: 'JavaScript', level: 90, category: 'Frontend' },
-      { name: 'HTML/CSS', level: 95, category: 'Frontend' },
-      { name: 'React', level: 80, category: 'Frontend' },
-      
-      // Backend Skills
-      { name: 'Node.js', level: 75, category: 'Backend' },
-      { name: 'Python', level: 70, category: 'Backend' },
-      { name: 'Java', level: 65, category: 'Backend' },
-      
-      // Database Skills
-      { name: 'SQL', level: 80, category: 'Database' },
-      { name: 'MongoDB', level: 75, category: 'Database' },
-      { name: 'PostgreSQL', level: 70, category: 'Database' },
-      
-      // Tools & DevOps
-      { name: 'Git', level: 85, category: 'Tools' },
-      { name: 'Docker', level: 60, category: 'DevOps' },
-      { name: 'AWS', level: 55, category: 'Cloud' }
-      
-      // ✅ ADD MORE SKILLS: Copy the format above and add your skills
-      // Example: { name: 'Your Skill', level: 85, category: 'Category' }
+      { 
+        name: 'Angular', 
+        level: 90, 
+        category: 'Frontend',
+        description: 'Modern web framework for building scalable single-page applications with TypeScript.',
+        experience: '4+ years of professional experience building enterprise applications',
+        projects: ['HP Services Estimator', 'AEYC-Idaho Government Project', 'Air Poroducts'],
+        certifications: ['Angular Developer Certification from Edureka'],
+        icon: '⚡'
+      },
+      { 
+        name: 'React', 
+        level: 70, 
+        category: 'Frontend',
+        description: 'JavaScript library for building user interfaces with component-based architecture.',
+        experience: '3+ years developing interactive web applications',
+        projects: ['Tic Tac Toe Game', 'Advance Calculator'],
+        icon: '⚛️'
+      },
+      { 
+        name: 'Vue', 
+        level: 70, 
+        category: 'Frontend',
+        description: 'Progressive JavaScript framework for building user interfaces.',
+        experience: '1+ year of experience with Vue 3 and Composition API',
+        projects: ['To Do List'],
+        icon: '💚'
+      },
+      { 
+        name: 'JavaScript', 
+        level: 80, 
+        category: 'Frontend',
+        description: 'Core programming language for web development with ES6+ features.',
+        experience: '4+ years of professional JavaScript development',
+        projects: ['Multiple Web Applications', 'API Integrations', 'Browser Extensions'],
+        certifications: ['JavaScript Algorithms and Data Structures'],
+        icon: '🟨'
+      },
+      { 
+        name: 'TypeScript', 
+        level: 80, 
+        category: 'Frontend',
+        description: 'Typed superset of JavaScript that enhances code quality and developer experience.',
+        experience: '3+ years using TypeScript in production applications',
+        projects: ['Angular Applications'],
+        icon: '🔷'
+      },
+
+      { 
+        name: 'C#', 
+        level: 70, 
+        category: 'Backend',
+        description: 'Object-oriented programming language for .NET framework development.',
+        experience: '4+ years developing .NET applications',
+        projects: ['Web APIs', 'Desktop Applications', 'Microservices'],
+        icon: '🟪'
+      },
+
+      { 
+        name: 'Jenkins', 
+        level: 70, 
+        category: 'CI/CD',
+        description: 'Open-source automation server for building, testing, and deploying software.',
+        experience: '1+ years setting up and maintaining CI/CD pipelines',
+        projects: ['Automated Testing Pipelines'],
+        icon: '🔴'
+      },
+     
+      { 
+        name: 'GitHub', 
+        level: 85, 
+        category: 'Version Control',
+        description: 'Web-based platform for version control and collaboration.',
+        experience: '4+ years using Git and GitHub for project management',
+        projects: ['Open Source Contributions', 'Team Collaboration', 'Project Management'],
+        icon: '📚'
+      },
+      { 
+        name: 'Bitbucket', 
+        level: 70, 
+        category: 'Version Control',
+        description: 'Git-based source code hosting and collaboration platform.',
+        experience: '2+ years using Bitbucket in enterprise environments',
+        projects: ['Team Repositories', 'Code Reviews', 'Pipeline Integration'],
+        icon: '🔵'
+      },
+
+      { 
+        name: 'Visual Studio', 
+        level: 80, 
+        category: 'Tools',
+        description: 'Microsoft\'s integrated development environment for .NET development.',
+        experience: '3+ years developing .NET applications',
+        projects: ['C# Applications', 'Web APIs', 'Desktop Software'],
+        icon: '🟦'
+      },
+      { 
+        name: 'VS Code', 
+        level: 90, 
+        category: 'Tools',
+        description: 'Lightweight but powerful source code editor with extensive extensions.',
+        experience: '4+ years as primary development environment',
+        projects: ['Web Development', 'Extension Development', 'Team Configuration'],
+        icon: '💻'
+      },
+      { 
+        name: 'Postman', 
+        level: 80, 
+        category: 'Tools',
+        description: 'API development and testing platform for building and testing APIs.',
+        experience: '3+ years testing and documenting APIs',
+        projects: ['API Testing', 'Documentation', 'Team Collaboration'],
+        icon: '📮'
+      },
+     
+      { 
+        name: 'Jasmine/Karma', 
+        level: 70, 
+        category: 'Testing',
+        description: 'Behavior-driven development framework for testing JavaScript code.',
+        experience: '2+ years writing unit tests',
+        projects: ['Angular Unit Tests', 'Component Testing', 'Service Testing'],
+        icon: '🧪'
+      },
+
+      { 
+        name: 'Chrome DevTools', 
+        level: 85, 
+        category: 'Testing',
+        description: 'Web developer tools built into Google Chrome for debugging and profiling.',
+        experience: '4+ years debugging web applications',
+        projects: ['Performance Optimization', 'Debugging', 'Network Analysis'],
+        icon: '🔍'
+      }
     ];
     
     return of(skills);
   }
 
-  // ========================================
-  // UPDATE YOUR WORK EXPERIENCE HERE
-  // ========================================
   getExperience(): Observable<Experience[]> {
     const experiences = [
       {

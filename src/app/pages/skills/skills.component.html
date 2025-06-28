@@ -9,10 +9,23 @@
       <div class="skill-category" *ngFor="let category of skillCategories">
         <h2 class="category-title">{{ category }}</h2>
         <div class="skills-grid">
-          <div class="skill-item" *ngFor="let skill of getSkillsByCategory(category)">
+          <div class="skill-item" 
+               *ngFor="let skill of getSkillsByCategory(category)"
+               [title]="getSkillTooltip(skill)"
+               (click)="openSkillModal(skill)"
+               [class.has-details]="skill.description || skill.experience || skill.projects || skill.certifications">
             <div class="skill-info">
-              <span class="skill-name">{{ skill.name }}</span>
-              <span class="skill-level">{{ skill.level }}%</span>
+              <div class="skill-header">
+                <span class="skill-name">{{ skill.name }}</span>
+                <span class="skill-level">{{ skill.level }}%</span>
+                <i class="info-icon" *ngIf="skill.description || skill.experience || skill.projects || skill.certifications">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </i>
+              </div>
             </div>
             <div class="skill-bar">
               <div class="skill-progress" [style.width.%]="skill.level"></div>
@@ -27,4 +40,10 @@
       <p>Loading skills...</p>
     </div>
   </div>
+
+  <app-skill-modal 
+    [skill]="selectedSkill"
+    [isOpen]="isModalOpen"
+    (closeModal)="closeSkillModal()">
+  </app-skill-modal>
 </div> 

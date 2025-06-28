@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './pages/about/about.component';
 import { SkillsComponent } from './pages/skills/skills.component';
+import { SkillModalComponent } from './pages/skills/skill-modal.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { ExperienceComponent } from './pages/experience/experience.component';
 import { ContactComponent } from './pages/contact/contact.component';
@@ -17,6 +18,7 @@ import { ContactComponent } from './pages/contact/contact.component';
     AppComponent,
     AboutComponent,
     SkillsComponent,
+    SkillModalComponent,
     ProjectsComponent,
     ExperienceComponent,
     ContactComponent

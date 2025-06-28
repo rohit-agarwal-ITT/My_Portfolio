@@ -13,6 +13,11 @@ export interface Skill {
   name: string;
   level: number;
   category: string;
+  description?: string;
+  experience?: string;
+  projects?: string[];
+  certifications?: string[];
+  icon?: string;
 }
 
 export interface Experience {

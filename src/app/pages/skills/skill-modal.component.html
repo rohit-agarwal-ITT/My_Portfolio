@@ -1,0 +1,54 @@
+<div class="modal-backdrop" *ngIf="isOpen" (click)="onBackdropClick($event)">
+  <div class="modal-content" [@modalAnimation]="isOpen ? 'open' : 'closed'">
+    <div class="modal-header">
+      <div class="skill-title">
+        <i class="skill-icon" *ngIf="skill?.icon">{{ skill?.icon }}</i>
+        <h2>{{ skill?.name }}</h2>
+      </div>
+      <button class="close-btn" (click)="close()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body" *ngIf="skill">
+      <div class="skill-overview">
+        <div class="skill-level-display">
+          <span class="level-label">Proficiency Level</span>
+          <div class="level-bar">
+            <div class="level-fill" [style.width.%]="skill.level"></div>
+          </div>
+          <span class="level-percentage">{{ skill.level }}%</span>
+        </div>
+      </div>
+
+      <div class="skill-details">
+        <div class="detail-section" *ngIf="skill.description">
+          <h3>About</h3>
+          <p>{{ skill.description }}</p>
+        </div>
+
+        <div class="detail-section" *ngIf="skill.experience">
+          <h3>Experience</h3>
+          <p>{{ skill.experience }}</p>
+        </div>
+
+        <div class="detail-section" *ngIf="skill.projects && skill.projects.length > 0">
+          <h3>Related Projects</h3>
+          <ul class="projects-list">
+            <li *ngFor="let project of skill.projects">{{ project }}</li>
+          </ul>
+        </div>
+
+        <div class="detail-section" *ngIf="skill.certifications && skill.certifications.length > 0">
+          <h3>Certifications</h3>
+          <ul class="certifications-list">
+            <li *ngFor="let cert of skill.certifications">{{ cert }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
