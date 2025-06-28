@@ -53,6 +53,19 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
+
+  --font-main: 'Poppins', sans-serif;
+  --font-content: 'Inter', 'Poppins', sans-serif;
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 1.8rem;
+  --font-size-h3: 1.5rem;
+  --font-size-h4: 1.2rem;
+  --font-size-meta: 1.08rem;
+  --font-size-content: 1.13rem;
+  --font-weight-bold: 800;
+  --font-weight-semi: 700;
+  --font-weight-medium: 600;
+  --font-weight-regular: 400;
 }
 
 [data-theme="dark"] {
@@ -363,5 +376,45 @@ img {
 @media (min-width: 769px) {
   .desktop-hidden {
     display: none;
+  }
+}
+
+/* Font scale and consistency classes */
+.heading-main, h1.heading-main {
+  font-family: var(--font-main);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 1.2rem;
+  line-height: 1.1;
+}
+.heading-sub, h2.heading-sub, h3.heading-sub {
+  font-family: var(--font-main);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semi);
+  margin-bottom: 0.8rem;
+  line-height: 1.15;
+}
+.meta-label {
+  font-family: var(--font-content);
+  font-size: var(--font-size-meta);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+.body-content {
+  font-family: var(--font-content);
+  font-size: var(--font-size-content);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.4rem;
+    --font-size-h3: 1.15rem;
+    --font-size-h4: 1.05rem;
+    --font-size-meta: 0.98rem;
+    --font-size-content: 1rem;
   }
 }

@@ -1,13 +1,13 @@
 <div class="skills-container">
   <div class="skills-content">
     <div class="skills-header">
-      <h1>Skills & Technologies</h1>
-      <p>My technical expertise and proficiency levels</p>
+      <h1 class="heading-main">Skills & Technologies</h1>
+      <p class="body-content">My technical expertise and proficiency levels</p>
     </div>
 
     <div class="skills-body" *ngIf="!loading">
       <div class="skill-category" *ngFor="let category of skillCategories">
-        <h2 class="category-title">{{ category }}</h2>
+        <h2 class="category-title heading-sub">{{ category }}</h2>
         <div class="skills-grid">
           <div class="skill-item" 
                *ngFor="let skill of getSkillsByCategory(category)"
@@ -16,8 +16,8 @@
                [class.has-details]="skill.description || skill.experience || skill.projects || skill.certifications">
             <div class="skill-info">
               <div class="skill-header">
-                <span class="skill-name">{{ skill.name }}</span>
-                <span class="skill-level">{{ skill.level }}%</span>
+                <span class="skill-name meta-label">{{ skill.name }}</span>
+                <span class="skill-level meta-label">{{ skill.level }}%</span>
                 <i class="info-icon" *ngIf="skill.description || skill.experience || skill.projects || skill.certifications">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>

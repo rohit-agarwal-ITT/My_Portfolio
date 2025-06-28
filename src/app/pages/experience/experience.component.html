@@ -1,8 +1,8 @@
 <div class="experience-container">
   <div class="experience-content">
     <div class="experience-header">
-      <h1>Work Experience</h1>
-      <p>My professional journey and career highlights</p>
+      <h1 class="heading-main">Work Experience</h1>
+      <p class="body-content">My professional journey and career highlights</p>
     </div>
 
     <div class="timeline" *ngIf="!loading">
@@ -10,13 +10,13 @@
         <div class="timeline-marker"></div>
         <div class="timeline-content">
           <div class="experience-header">
-            <h3 class="position">{{ experience.position }}</h3>
-            <h4 class="company">{{ experience.company }}</h4>
-            <span class="duration">{{ experience.duration }}</span>
+            <h3 class="position heading-sub">{{ experience.position }}</h3>
+            <h4 class="company meta-label">{{ experience.company }}</h4>
+            <span class="duration meta-label">{{ experience.duration }}</span>
           </div>
           
           <div class="experience-description">
-            <ul>
+            <ul class="body-content">
               <li *ngFor="let desc of experience.description">{{ desc }}</li>
             </ul>
           </div>

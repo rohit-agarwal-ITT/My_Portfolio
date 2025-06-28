@@ -1,8 +1,8 @@
 <div class="about-container">
   <div class="about-content">
     <div class="about-header">
-      <h1 class="about-title">About Me</h1>
-      <div class="about-subtitle">Full Stack Developer & Problem Solver</div>
+      <h1 class="about-title heading-main">About Me</h1>
+      <div class="about-subtitle heading-sub">Full Stack Developer & Problem Solver</div>
     </div>
 
     <div class="about-profile-pic">
@@ -12,8 +12,8 @@
     <div class="about-body" *ngIf="personalInfo">
       <div class="personal-info">
         <div class="info-item">
-          <h3>{{ personalInfo.name }}</h3>
-          <p class="title">{{ personalInfo.title }}</p>
+          <h3 class="heading-sub">{{ personalInfo.name }}</h3>
+          <p class="title meta-label">{{ personalInfo.title }}</p>
         </div>
 
         <div class="contact-info">
@@ -44,14 +44,14 @@
       </div>
 
       <div class="about-description">
-        <h3>Professional Summary</h3>
-        <p>
+        <h3 class="heading-sub">Professional Summary</h3>
+        <p class="body-content">
           Full Stack Developer with 4+ years of experience building scalable, high-performance web applications using Angular, TypeScript, and Node.js. Adept at designing intuitive UIs, architecting robust backends, and delivering end-to-end solutions for diverse industries.
         </p>
-        <p>
+        <p class="body-content">
           Proven track record of leading projects from concept to deployment, optimizing code for speed and maintainability, and collaborating with cross-functional teams to exceed business goals.
         </p>
-        <p>
+        <p class="body-content">
           Passionate about clean code, modern DevOps practices, and continuous learning to stay ahead in the fast-evolving tech landscape.
         </p>
       </div>
