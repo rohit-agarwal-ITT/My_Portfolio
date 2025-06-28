@@ -212,6 +212,12 @@
 .social-link:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-xl);
+  color: white;
+}
+
+.social-link:hover i,
+.social-link:hover span {
+  color: white;
 }
 
 .social-link i {

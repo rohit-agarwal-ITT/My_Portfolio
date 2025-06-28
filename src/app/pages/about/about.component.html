@@ -34,11 +34,11 @@
         <div class="social-links" *ngIf="personalInfo.linkedin || personalInfo.github">
           <a *ngIf="personalInfo.linkedin" [href]="personalInfo.linkedin" target="_blank" class="social-link">
             <i class="fab fa-linkedin"></i>
-            LinkedIn
+            <span>LinkedIn</span>
           </a>
           <a *ngIf="personalInfo.github" [href]="personalInfo.github" target="_blank" class="social-link">
             <i class="fab fa-github"></i>
-            GitHub
+            <span>GitHub</span>
           </a>
         </div>
       </div>

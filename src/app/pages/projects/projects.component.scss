@@ -17,10 +17,42 @@
   overflow: visible;
 }
 
+.project-subtitle {
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
 .projects-header {
   text-align: center;
   margin-bottom: 3rem;
   animation: slideInFromTop 0.8s ease-out;
+}
+
+.projects-header h1,
+.heading-main {
+  font-size: 4rem;
+  font-weight: 800;
+  font-family: 'Poppins', sans-serif;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.projects-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
 }
 
 .gradient-text {
@@ -68,9 +100,8 @@
   left: 0;
   backface-visibility: hidden;
   border-radius: var(--radius-xl);
-  box-shadow: 0 4px 24px rgba(90, 108, 255, 0.10);
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(16px);
+  box-shadow: 0 6px 32px 0 rgba(60, 72, 100, 0.10), 0 1.5px 8px 0 rgba(90, 108, 255, 0.08);
+  background: #f1f3f6 !important;
   border: 1.5px solid var(--border-color);
   display: flex;
   flex-direction: column;
@@ -141,7 +172,7 @@
   padding: 0;
   list-style: none;
   color: var(--text-secondary);
-  font-size: 1.13rem;
+  font-size: 0.97rem;
   line-height: 1.8;
   text-align: left;
 }
@@ -153,7 +184,7 @@
   margin-bottom: 1.2rem;
   position: relative;
   font-family: 'Inter', 'Poppins', sans-serif;
-  font-size: 1.13rem;
+  font-size: 0.97rem;
   font-weight: 400;
   letter-spacing: 0.01em;
 }
@@ -179,7 +210,7 @@
 
 .project-details .detail-text {
   flex: 1 1 auto;
-  font-size: 1.13rem;
+  font-size: 0.97rem;
   font-weight: 400;
   color: var(--text-secondary);
   word-break: break-word;
@@ -351,4 +382,12 @@
   margin-bottom: 1.2rem;
   margin-top: -0.5rem;
   letter-spacing: 0.01em;
+}
+
+[data-theme="light"] .project-flip-card .flip-card-front,
+[data-theme="light"] .project-flip-card .flip-card-back {
+  background: linear-gradient(135deg, #43e0ff 0%, #7f7fff 60%, #a259ff 100%);
+  /* Bright, vibrant blue glass effect for light mode */
+  box-shadow: 0 4px 32px rgba(67,224,255,0.18), 0 1.5px 8px rgba(162,89,255,0.12);
+  border: 1.5px solid #43e0ff;
 } 
