@@ -74,9 +74,13 @@ export class ProjectsComponent implements OnInit {
   }
 
   getInitials(name: string): string {
+    // Special case for HP projects
+    if (name.trim().toLowerCase().startsWith('hp')) {
+      return 'HP';
+    }
     return name
       .split(' ')
-      .filter(w => w)
+      .filter(w => w && w[0].match(/[A-Za-z]/))
       .map(w => w[0])
       .join('')
       .toUpperCase();
