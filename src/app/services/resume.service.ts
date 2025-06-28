@@ -204,29 +204,54 @@ export class ResumeService {
   getProjects(): Observable<Project[]> {
     const projects = [
       {
-        name: 'E-Commerce Platform', // ✅ UPDATE: Your project name
-        description: 'A full-stack e-commerce platform with user authentication, product management, and payment integration.', // ✅ UPDATE: Project description
-        technologies: ['Angular', 'Node.js', 'MongoDB', 'Stripe'], // ✅ UPDATE: Technologies used
-        github: 'https://github.com/rohit-agarwal/ecommerce', // ✅ UPDATE: Your GitHub repo link
-        live: 'https://ecommerce-demo.com' // ✅ UPDATE: Your live demo link
+        name: 'Pharos',
+        role: 'Technical Lead',
+        company: 'In Time Tec',
+        period: 'April 25 – Present',
+        details: [
+          'Assigned as Technical Lead to the PHAROS project, focused on securing multifunction printers (MFPs) across multiple vendors to prevent unauthorized access to printing and scanning functionalities.',
+          'Collaborating with vendors like Lexmark, integrating their Java-based embedded solutions with PHAROS to enforce security protocols and compliance.',
+          'Working on the C#-based site service, responsible for communication and authentication workflows between the PHAROS system and connected printers.',
+          'Actively participating in client discussions to understand requirements, provide progress updates, and ensure alignment with business objectives.'
+        ]
       },
       {
-        name: 'Task Management App', // ✅ UPDATE: Your project name
-        description: 'A collaborative task management application with real-time updates and team collaboration features.', // ✅ UPDATE: Project description
-        technologies: ['React', 'Firebase', 'Material-UI'], // ✅ UPDATE: Technologies used
-        github: 'https://github.com/rohit-agarwal/task-manager', // ✅ UPDATE: Your GitHub repo link
-        live: 'https://task-manager-demo.com' // ✅ UPDATE: Your live demo link
+        name: 'Air Products',
+        role: 'Sr. Software Engineer',
+        company: 'In Time Tec',
+        period: 'June 23 – April 25',
+        details: [
+          'Solely responsible for managing and enhancing 7 enterprise-level front-end applications, leading full-cycle development from requirements gathering to production deployment.',
+          'Developed dynamic and responsive UIs using Angular, TypeScript, Kendo UI, and object-oriented programming (OOP) principles.',
+          'Implemented real-time data visualizations and graph-based analytics to improve operational insights.',
+          'Actively collaborated with stakeholders and backend teams, ensuring alignment with business goals and timely delivery.'
+        ]
       },
       {
-        name: 'Weather Dashboard', // ✅ UPDATE: Your project name
-        description: 'A weather dashboard that displays current weather and forecasts using multiple weather APIs.', // ✅ UPDATE: Project description
-        technologies: ['Angular', 'TypeScript', 'OpenWeather API'], // ✅ UPDATE: Technologies used
-        github: 'https://github.com/rohit-agarwal/weather-dashboard', // ✅ UPDATE: Your GitHub repo link
-        live: 'https://weather-dashboard-demo.com' // ✅ UPDATE: Your live demo link
+        name: 'Rise – IdahoSTARS',
+        role: 'Software Engineer',
+        company: 'In Time Tec',
+        period: 'September 22 – May 23',
+        details: [
+          'Led a team of 4–5 developers to deliver a high-impact childcare management system under the Idaho Government\'s initiative.',
+          'Orchestrated sprint planning, task assignment, and delivery tracking using Agile methodologies.',
+          'Enhanced UI functionality and user engagement using Angular and modern JavaScript libraries.',
+          'Engaged directly with stakeholders for requirement gathering, performed code reviews, and implemented thorough testing protocols for quality assurance.'
+        ]
+      },
+      {
+        name: 'HP – Services Estimator',
+        role: 'Software Engineer',
+        company: 'In Time Tec',
+        period: 'March 21 – September 22',
+        details: [
+          'Developed and maintained complex modules in Angular, resulting in a 90% reduction in compilation time through version upgrades and library optimizations.',
+          'Ensured robust application quality with 80%+ unit test coverage using Jasmine/Karma and performed regular integration with backend APIs.',
+          'Utilized CI/CD pipelines (Jenkins and Azure) for seamless code deployment.',
+          'Participated in sprint ceremonies, created detailed flowcharts and architecture diagrams, and closely coordinated with cross-functional teams for smooth delivery.'
+        ]
       }
-      // ✅ ADD MORE PROJECTS: Copy the format above and add your projects
     ];
-    
     return of(projects);
   }
 

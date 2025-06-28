@@ -30,11 +30,10 @@ export interface Experience {
 
 export interface Project {
   name: string;
-  description: string;
-  technologies: string[];
-  github?: string;
-  live?: string;
-  image?: string;
+  role: string;
+  company: string;
+  period: string;
+  details: string[];
 }
 
 export interface Education {

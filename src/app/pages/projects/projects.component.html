@@ -2,20 +2,36 @@
   <div class="projects-content">
     <div class="projects-header">
       <h1 class="gradient-text">Projects</h1>
-      <p>Some of my recent work and personal projects</p>
+      <p>My real-world experience in impactful projects</p>
     </div>
 
     <div class="projects-grid" *ngIf="!loading">
-      <div class="project-card glass" *ngFor="let project of projects">
-        <div class="project-image" *ngIf="project.image">
-          <img [src]="project.image" [alt]="project.name + ' screenshot'" />
-        </div>
-        <div class="project-content">
-          <h3 class="project-title gradient-text">{{ project.name }}</h3>
-          <p class="project-description">{{ project.description }}</p>
-          
-          <div class="project-tech">
-            <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
+      <div class="project-flip-card" *ngFor="let project of projects; let i = index"
+           [class.flipped]="flippedIndex === i"
+           (mouseenter)="onCardHover(i)" (mouseleave)="onCardLeave()"
+           (click)="onCardClick(i)" tabindex="0" (keydown.enter)="onCardClick(i)" (keydown.space)="onCardClick(i)"
+           [attr.aria-label]="'Project card: ' + project.name + '. Click or tap to flip for details.'">
+        <div class="flip-card-inner">
+          <div class="flip-card-front glass">
+            <div class="project-badge">
+              <span class="badge-initials">{{ getInitials(project.name) }}</span>
+            </div>
+            <h3 class="project-title gradient-text">{{ project.name }}</h3>
+            <div class="project-tagline">{{ projectTagline(project.name) }}</div>
+            <div class="project-meta">
+              <span class="project-role">{{ project.role }}</span>
+              <span class="project-company">@ {{ project.company }}</span>
+              <span class="project-period">{{ project.period }}</span>
+            </div>
+          </div>
+          <div class="flip-card-back glass">
+            <h3 class="project-title gradient-text">{{ project.name }}</h3>
+            <ul class="project-details">
+              <li *ngFor="let detail of project.details">
+                <span class="detail-icon">✔</span>
+                <span class="detail-text">{{ detail }}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

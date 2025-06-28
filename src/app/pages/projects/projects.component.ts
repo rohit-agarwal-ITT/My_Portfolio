@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Project } from 'src/app/services/interfaces';
 import { ResumeService } from 'src/app/services/resume.service';
 
@@ -10,11 +10,23 @@ import { ResumeService } from 'src/app/services/resume.service';
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   loading = true;
+  flippedIndex: number | null = null;
+  isMobile = false;
 
   constructor(private resumeService: ResumeService) {}
 
   ngOnInit(): void {
     this.loadProjects();
+    this.checkMobile();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkMobile();
+  }
+
+  checkMobile() {
+    this.isMobile = window.innerWidth <= 900;
   }
 
   loadProjects(): void {
@@ -28,5 +40,45 @@ export class ProjectsComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  onCardHover(index: number): void {
+    if (!this.isMobile) {
+      this.flippedIndex = index;
+    }
+  }
+
+  onCardLeave(): void {
+    if (!this.isMobile) {
+      this.flippedIndex = null;
+    }
+  }
+
+  onCardClick(index: number): void {
+    if (this.isMobile) {
+      this.flippedIndex = this.flippedIndex === index ? null : index;
+    } else {
+      // On desktop, allow click to flip as well
+      this.flippedIndex = this.flippedIndex === index ? null : index;
+    }
+  }
+
+  projectTagline(name: string): string {
+    switch (name) {
+      case 'Pharos': return 'Securing enterprise printing across vendors';
+      case 'Air Products': return 'Enterprise front-end excellence';
+      case 'Rise – IdahoSTARS': return 'Childcare management for Idaho government';
+      case 'HP – Services Estimator': return 'Optimizing HP service workflows';
+      default: return '';
+    }
+  }
+
+  getInitials(name: string): string {
+    return name
+      .split(' ')
+      .filter(w => w)
+      .map(w => w[0])
+      .join('')
+      .toUpperCase();
   }
 } 
