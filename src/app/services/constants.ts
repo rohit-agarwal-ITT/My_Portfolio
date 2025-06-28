@@ -1,1 +1,0 @@
-export const RESUME_PATH = 'assets/Rohit_Agarwal_ITT_Resume.pdf'; 

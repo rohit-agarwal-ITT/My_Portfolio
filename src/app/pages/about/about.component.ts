@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonalInfo } from 'src/app/services/interfaces';
 import { ResumeService } from 'src/app/services/resume.service';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'app-about',
@@ -12,7 +13,10 @@ export class AboutComponent implements OnInit {
   resumeUrl: string = '';
   isDownloading: boolean = false;
 
-  constructor(private resumeService: ResumeService) {}
+  constructor(
+    private resumeService: ResumeService,
+    private configService: ConfigService
+  ) {}
 
   ngOnInit(): void {
     this.loadPersonalInfo();
@@ -36,9 +40,13 @@ export class AboutComponent implements OnInit {
     this.isDownloading = true;
     
     try {
+      const config = this.configService.getCurrentConfig();
+      const resumePath = config?.portfolio?.resumePath || 'assets/Rohit_Agarwal_ITT_Resume.pdf';
+      const fileName = resumePath.split('/').pop() || 'Resume.pdf';
+      
       const link = document.createElement('a');
       link.href = this.resumeUrl;
-      link.download = 'Rohit_Agarwal_Resume.pdf';
+      link.download = fileName;
       link.target = '_blank';
       
       // Add link to DOM temporarily

@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
+import { ConfigService } from './services/config.service';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
   isDarkMode = false;
   isMobileMenuOpen = false;
   showScrollToTop = false;
+  config: any = null;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -58,9 +60,20 @@ export class AppComponent implements OnInit {
     }
   }
 
+  constructor(private configService: ConfigService) {}
+
   ngOnInit() {
     this.checkMobile();
     this.loadTheme();
+    this.loadConfig();
+  }
+
+  private loadConfig() {
+    this.configService.getConfig().subscribe(config => {
+      if (config) {
+        this.config = config;
+      }
+    });
   }
 
   checkMobile() {
@@ -131,9 +144,13 @@ export class AppComponent implements OnInit {
 
   downloadResume(event: Event): void {
     event.preventDefault();
+    const config = this.configService.getCurrentConfig();
+    const resumePath = config?.portfolio?.resumePath || 'assets/Rohit_Agarwal_ITT_Resume.pdf';
+    const fileName = resumePath.split('/').pop() || 'Resume.pdf';
+    
     const link = document.createElement('a');
-    link.href = 'assets/Rohit_Agarwal_ITT_Resume.pdf';
-    link.download = 'Rohit_Agarwal_Resume.pdf';
+    link.href = resumePath;
+    link.download = fileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

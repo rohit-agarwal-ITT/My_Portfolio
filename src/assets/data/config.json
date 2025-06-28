@@ -1,0 +1,24 @@
+{
+  "portfolio": {
+    "title": "Rohit Agarwal - Portfolio",
+    "description": "Full Stack Developer & Problem Solver",
+    "resumePath": "assets/Rohit_Agarwal_ITT_Resume.pdf",
+    "profileImage": "assets/profile_pic.jpg",
+    "theme": {
+      "primaryColor": "#6366f1",
+      "secondaryColor": "#7c3aed",
+      "accentColor": "#10b981"
+    },
+    "social": {
+      "linkedin": "http://linkedin.com/in/rohit-agarwal-a92795188",
+      "github": "https://github.com/rohit-agarwal-ITT",
+      "twitter": "",
+      "email": "rohitagarwal516@gmail.com"
+    },
+    "contact": {
+      "email": "rohitagarwal516@gmail.com",
+      "phone": "+91 8118807991",
+      "location": "Jaipur, Rajasthan, India"
+    }
+  }
+} 
