@@ -59,11 +59,11 @@ export class ResumeService {
     return of({
       name: 'Rohit Agarwal', // ✅ UPDATE: Your full name
       title: 'Software Developer', // ✅ UPDATE: Your job title
-      email: 'rohit.agarwal@example.com', // ✅ UPDATE: Your real email
-      phone: '+1 (555) 123-4567', // ✅ UPDATE: Your real phone number
-      location: 'United States', // ✅ UPDATE: Your city, state, country
-      linkedin: 'https://linkedin.com/in/rohit-agarwal', // ✅ UPDATE: Your LinkedIn profile
-      github: 'https://github.com/rohit-agarwal' // ✅ UPDATE: Your GitHub profile
+      email: 'rohitagarwal516@gmail.com', // ✅ UPDATE: Your real email
+      phone: '+91 8118807991', // ✅ UPDATE: Your real phone number
+      location: 'Jaipur, Rajasthan, India', // ✅ UPDATE: Your city, state, country
+      linkedin: 'http://linkedin.com/in/rohit-agarwal-a92795188', // ✅ UPDATE: Your LinkedIn profile
+      github: 'https://github.com/rohit-agarwal-ITT' // ✅ UPDATE: Your GitHub profile
     });
   }
 
