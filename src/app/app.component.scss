@@ -300,6 +300,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
 }
 .brand-info .name {
   font-weight: 700;
@@ -309,6 +310,24 @@
 .brand-info .tagline {
   color: var(--text-secondary, #7a8ca3);
   font-size: 0.9rem;
+}
+
+.brand-info.single-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7rem;
+  white-space: nowrap;
+}
+.brand-info.single-line .name {
+  font-weight: 700;
+  color: var(--text-primary, #222c3a);
+  font-size: 1.1rem;
+}
+.brand-info.single-line .tagline {
+  color: var(--text-secondary, #7a8ca3);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .close-btn {
