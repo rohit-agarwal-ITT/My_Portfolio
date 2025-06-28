@@ -54,14 +54,14 @@ export class ContactComponent implements OnInit {
     this.isSubmitting = true;
 
     emailjs.send(
-      'service_3d095nj',    // <-- Replace with your EmailJS Service ID
-      'template_ej5ujzi',   // <-- Replace with your EmailJS Template ID
+      'service_3d095nj',  
+      'template_ej5ujzi', 
       {
         from_name: this.contactForm.value.name,
         from_email: this.contactForm.value.email,
         message: this.contactForm.value.message
       },
-      'xP-WHpvN68bH-I6Vn'     // <-- Replace with your EmailJS Public Key
+      'xP-WHpvN68bH-I6Vn' 
     ).then(
       (result: any) => {
         this.showSuccess = true;
@@ -82,9 +82,3 @@ export class ContactComponent implements OnInit {
     });
   }
 }
-
-// For auto-reply:
-// 1. In your EmailJS dashboard, go to your template's Auto-Reply tab.
-// 2. Enable Auto-Reply.
-// 3. Set To Email: {{from_email}}
-// 4. Set Subject and Content as desired (see previous instructions). 
