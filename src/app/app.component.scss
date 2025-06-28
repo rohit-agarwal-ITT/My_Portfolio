@@ -475,14 +475,23 @@
   padding: 2rem 2rem 2rem 2rem;
   display: grid;
   grid-template-columns: 2fr 1fr 1.5fr;
-  gap: 2rem;
+  gap: 3.5rem;
   align-items: start;
   padding-top: 2rem;
 }
 
 .footer-section {
-  padding: 0;
+  padding: 2.5rem 2rem 2.5rem 2rem;
   margin: 0;
+  background: rgba(255,255,255,0.04);
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 16px rgba(90,108,255,0.08);
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+
+.footer-section:not(:last-child) {
+  margin-bottom: 2rem;
 }
 
 .footer-section h3 {
@@ -868,6 +877,17 @@
     width: 45px;
     height: 45px;
     font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .footer-section {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
   }
 }
 
