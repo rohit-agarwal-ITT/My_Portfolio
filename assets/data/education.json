@@ -1,0 +1,14 @@
+[
+  {
+    "degree": "Bachelor of Science in Computer Science",
+    "institution": "University of Technology",
+    "year": "2018",
+    "gpa": "3.8/4.0"
+  },
+  {
+    "degree": "Associate Degree in Information Technology",
+    "institution": "Community College",
+    "year": "2016",
+    "gpa": "3.9/4.0"
+  }
+] 
