@@ -2,53 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-export interface PersonalInfo {
-  name: string;
-  title: string;
-  email: string;
-  phone: string;
-  location: string;
-  linkedin?: string;
-  github?: string;
-  website?: string;
-}
-
-export interface Skill {
-  name: string;
-  level: number;
-  category: string;
-}
-
-export interface Experience {
-  company: string;
-  position: string;
-  duration: string;
-  description: string[];
-  technologies: string[];
-}
-
-export interface Project {
-  name: string;
-  description: string;
-  technologies: string[];
-  github?: string;
-  live?: string;
-  image?: string;
-}
-
-export interface Education {
-  degree: string;
-  institution: string;
-  year: string;
-  gpa?: string;
-}
+import { PersonalInfo, Skill, Experience, Project, Education } from './interfaces';
+import { RESUME_PATH } from './constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResumeService {
-  private resumePath = 'assets/Rohit_Agarwal_ITT_Resume.pdf';
+  private resumePath = RESUME_PATH;
 
   constructor(private http: HttpClient) {}
 
