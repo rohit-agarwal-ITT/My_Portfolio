@@ -22,12 +22,21 @@
             Contact number must be exactly 10 digits and only numbers are allowed.
           </div>
         </div>
-        <button type="submit" class="submit-btn gradient-bg">Let's Go 🚀</button>
+        <button type="submit" class="submit-btn gradient-bg" [disabled]="isSaving">
+          <span *ngIf="!isSaving">Let's Go 🚀</span>
+          <span *ngIf="isSaving">Processing...</span>
+        </button>
       </form>
     </ng-container>
     <ng-container *ngIf="showThanks">
-      <h2 class="modal-title gradient-text">Thank you, {{ userName }}! 🎉</h2>
-      <p class="modal-message body-content">We're thrilled to have you here. Enjoy exploring the portfolio and feel free to reach out if you have any questions or feedback!</p>
+      <h2 class="modal-title gradient-text">
+        <span *ngIf="isAdmin">Welcome back, {{ userName }}! 👑</span>
+        <span *ngIf="!isAdmin">Thank you, {{ userName }}! 🎉</span>
+      </h2>
+      <p class="modal-message body-content">
+        <span *ngIf="isAdmin">Admin access granted! You can now access the admin dashboard to view visitor analytics.</span>
+        <span *ngIf="!isAdmin">We're thrilled to have you here. Enjoy exploring the portfolio and feel free to reach out if you have any questions or feedback!</span>
+      </p>
     </ng-container>
   </div>
 </div> 

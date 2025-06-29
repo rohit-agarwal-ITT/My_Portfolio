@@ -2,8 +2,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ConfigService } from './services/config.service';
+import { AuthService } from './services/auth.service';
 import { filter } from 'rxjs/operators';
-import * as emailjs from 'emailjs-com';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
   bannerMessage = '';
   showWelcomeModal = true;
   isAdminRoute = false;
+  currentUser$ = this.authService.currentUser$;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -68,7 +69,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private configService: ConfigService,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -190,25 +192,20 @@ export class AppComponent implements OnInit {
   }
 
   onWelcomeSubmit(data: { name: string; contact: string }) {
-    // Send via EmailJS (reuse contact logic)
-    emailjs.send(
-      'service_3d095nj',
-      'template_ej5ujzi',
-      {
-        from_name: data.name,
-        from_email: 'visitor@portfolio.com',
-        message: `Visitor Name: ${data.name}\nContact: ${data.contact}`
-      },
-      'xP-WHpvN68bH-I6Vn'
-    ).then(
-      () => {
-        localStorage.setItem('visitedPortfolio', 'true');
-        // Do not close the modal here; let the user close it manually
-      },
-      () => {
-        localStorage.setItem('visitedPortfolio', 'true');
-        // Do not close the modal here; let the user close it manually
-      }
-    );
+    // Authentication is now handled in the welcome modal component
+    // This method is just for any additional app-level logic if needed
+    console.log('Welcome modal submitted:', data);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
+
+  exitUser() {
+    localStorage.removeItem('visitedPortfolio');
+    this.authService.logout();
+    this.showWelcomeModal = true;
+    this.router.navigate(['/about']);
   }
 }

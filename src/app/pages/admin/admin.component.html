@@ -1,10 +1,104 @@
 <div class="admin-container">
   <div class="admin-header">
     <h1 class="admin-title">Admin Dashboard</h1>
-    <p class="admin-subtitle">Visitor Analytics</p>
+    <p class="admin-subtitle">Visitor Analytics & Settings</p>
   </div>
 
   <div class="admin-content">
+    <!-- Credentials Management Section -->
+    <div class="credentials-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fas fa-key"></i>
+          Admin Credentials
+        </h2>
+        <button class="edit-btn" (click)="toggleCredentialsEdit()" *ngIf="!editingCredentials">
+          <i class="fas fa-edit"></i>
+          Edit
+        </button>
+        <div class="edit-actions" *ngIf="editingCredentials">
+          <button class="save-btn" (click)="saveCredentials()" [disabled]="savingCredentials">
+            <i class="fas fa-save"></i>
+            <span *ngIf="!savingCredentials">Save</span>
+            <span *ngIf="savingCredentials">Saving...</span>
+          </button>
+          <button class="cancel-btn" (click)="cancelCredentialsEdit()">
+            <i class="fas fa-times"></i>
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div class="credentials-card">
+        <div class="credentials-info" *ngIf="!editingCredentials">
+          <div class="credential-row">
+            <label>Admin Name:</label>
+            <span class="credential-value">{{ currentCredentials?.name || 'Not set' }}</span>
+          </div>
+          <div class="credential-row">
+            <label>Contact Number:</label>
+            <span class="credential-value">{{ currentCredentials?.contact || 'Not set' }}</span>
+          </div>
+          <div class="credential-row" *ngIf="currentCredentials?.createdAt">
+            <label>Created:</label>
+            <span class="credential-value">{{ formatDate(currentCredentials?.createdAt) }}</span>
+          </div>
+          <div class="credential-row" *ngIf="currentCredentials?.updatedAt">
+            <label>Last Updated:</label>
+            <span class="credential-value">{{ formatDate(currentCredentials?.updatedAt) }}</span>
+          </div>
+        </div>
+
+        <div class="credentials-form" *ngIf="editingCredentials">
+          <form [formGroup]="credentialsForm" (ngSubmit)="saveCredentials()">
+            <div class="form-group">
+              <label for="adminName">Admin Name</label>
+              <input 
+                id="adminName" 
+                type="text" 
+                formControlName="name" 
+                placeholder="Enter admin name"
+                [class.error]="credentialsForm.get('name')?.invalid && credentialsForm.get('name')?.touched"
+              />
+              <div class="error-message" *ngIf="credentialsForm.get('name')?.invalid && credentialsForm.get('name')?.touched">
+                Admin name is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="adminContact">Contact Number</label>
+              <input 
+                id="adminContact" 
+                type="text" 
+                formControlName="contact" 
+                placeholder="Enter 10-digit contact number"
+                maxlength="10"
+                pattern="[0-9]*"
+                inputmode="numeric"
+                [class.error]="credentialsForm.get('contact')?.invalid && credentialsForm.get('contact')?.touched"
+                (input)="onContactInput($event)"
+              />
+              <div class="error-message" *ngIf="credentialsForm.get('contact')?.invalid && credentialsForm.get('contact')?.touched">
+                Contact number must be exactly 10 digits
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="save-btn" [disabled]="savingCredentials || credentialsForm.invalid">
+                <i class="fas fa-save"></i>
+                <span *ngIf="!savingCredentials">Save Changes</span>
+                <span *ngIf="savingCredentials">Saving...</span>
+              </button>
+              <button type="button" class="cancel-btn" (click)="cancelCredentialsEdit()">
+                <i class="fas fa-times"></i>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <div class="stats-section">
       <div class="stat-card">
         <div class="stat-icon">

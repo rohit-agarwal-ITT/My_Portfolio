@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { VisitorService } from '../../services/visitor.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-welcome-modal',
@@ -15,12 +15,13 @@ export class WelcomeModalComponent implements OnInit {
   showThanks = false;
   userName = '';
   isSaving = false;
+  isAdmin = false;
 
   constructor(
     private fb: FormBuilder, 
     private renderer: Renderer2, 
     private el: ElementRef,
-    private visitorService: VisitorService
+    private authService: AuthService
   ) {
     this.welcomeForm = this.fb.group({
       name: ['', Validators.required],
@@ -79,28 +80,35 @@ export class WelcomeModalComponent implements OnInit {
       try {
         const formData = this.welcomeForm.value;
         
-        // Save visitor information to Firestore
-        await this.visitorService.saveVisitorInfo({
-          name: formData.name,
-          mobile: formData.contact,
-          userAgent: navigator.userAgent
-        });
-
-        this.userName = formData.name;
-        this.submitInfo.emit({
-          name: formData.name,
-          contact: formData.contact
-        });
-        this.showThanks = true;
+        // Authenticate user through auth service
+        const result = await this.authService.authenticateUser(formData.name, formData.contact);
+        
+        if (result.success) {
+          this.userName = formData.name;
+          this.isAdmin = result.isAdmin;
+          
+          // Emit the info for other components
+          this.submitInfo.emit({
+            name: formData.name,
+            contact: formData.contact
+          });
+          
+          this.showThanks = true;
+          
+          // Store that user has visited
+          localStorage.setItem('visitedPortfolio', 'true');
+        } else {
+          // Handle error - still show thanks but with error message
+          this.userName = formData.name;
+          this.showThanks = true;
+          localStorage.setItem('visitedPortfolio', 'true');
+        }
       } catch (error) {
-        console.error('Error saving visitor information:', error);
-        // Still show thanks even if saving fails
+        console.error('Error in welcome modal:', error);
+        // Still show thanks even if there's an error
         this.userName = this.welcomeForm.value.name;
-        this.submitInfo.emit({
-          name: this.welcomeForm.value.name,
-          contact: this.welcomeForm.value.contact
-        });
         this.showThanks = true;
+        localStorage.setItem('visitedPortfolio', 'true');
       } finally {
         this.isSaving = false;
       }
