@@ -57,6 +57,16 @@
           </div>
         </div>
 
+        <div class="error-message" *ngIf="showError" @messageAnimation>
+          <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="error-content">
+            <h3 class="heading-sub">Message Not Sent</h3>
+            <p class="body-content">Sorry, there was an error sending your message. Please try again later.</p>
+          </div>
+        </div>
+
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form" *ngIf="!showSuccess">
           <div class="form-row">
             <div class="form-group">
@@ -149,4 +159,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> 

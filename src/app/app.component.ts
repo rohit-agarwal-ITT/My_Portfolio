@@ -1,7 +1,9 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ConfigService } from './services/config.service';
+import { filter } from 'rxjs/operators';
+import * as emailjs from 'emailjs-com';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +44,10 @@ export class AppComponent implements OnInit {
   isMobileMenuOpen = false;
   showScrollToTop = false;
   config: any = null;
+  showBanner = true;
+  bannerMessage = '';
+  showWelcomeModal = true;
+  isAdminRoute = false;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -60,12 +66,31 @@ export class AppComponent implements OnInit {
     }
   }
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.checkMobile();
     this.loadTheme();
     this.loadConfig();
+    this.setupRouteDetection();
+
+    // Show welcome modal only if not visited before
+    if (localStorage.getItem('visitedPortfolio') !== 'true') {
+      this.showWelcomeModal = true;
+    } else {
+      this.showWelcomeModal = false;
+    }
+  }
+
+  private setupRouteDetection() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.isAdminRoute = event.url.includes('/admin');
+    });
   }
 
   private loadConfig() {
@@ -154,5 +179,36 @@ export class AppComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  onBannerClosed() {
+    this.showBanner = false;
+  }
+
+  onWelcomeClose() {
+    this.showWelcomeModal = false;
+  }
+
+  onWelcomeSubmit(data: { name: string; contact: string }) {
+    // Send via EmailJS (reuse contact logic)
+    emailjs.send(
+      'service_3d095nj',
+      'template_ej5ujzi',
+      {
+        from_name: data.name,
+        from_email: 'visitor@portfolio.com',
+        message: `Visitor Name: ${data.name}\nContact: ${data.contact}`
+      },
+      'xP-WHpvN68bH-I6Vn'
+    ).then(
+      () => {
+        localStorage.setItem('visitedPortfolio', 'true');
+        // Do not close the modal here; let the user close it manually
+      },
+      () => {
+        localStorage.setItem('visitedPortfolio', 'true');
+        // Do not close the modal here; let the user close it manually
+      }
+    );
   }
 }

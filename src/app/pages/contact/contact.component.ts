@@ -52,6 +52,7 @@ export class ContactComponent implements OnInit {
   onSubmit() {
     if (this.contactForm.invalid) return;
     this.isSubmitting = true;
+    this.showError = false;
 
     emailjs.send(
       'service_3d095nj',  
@@ -65,14 +66,15 @@ export class ContactComponent implements OnInit {
     ).then(
       (result: any) => {
         this.showSuccess = true;
-        this.isSubmitting = false;
         this.contactForm.reset();
       },
       (error: any) => {
-        alert('Failed to send message. Please try again later.');
-        this.isSubmitting = false;
+        console.error('Error sending message:', error);
+        this.showError = true;
       }
-    );
+    ).finally(() => {
+      this.isSubmitting = false;
+    });
   }
 
   markFormGroupTouched() {

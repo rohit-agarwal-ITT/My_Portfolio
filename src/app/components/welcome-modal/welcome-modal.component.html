@@ -1,0 +1,33 @@
+<div class="welcome-modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="sparkle-container"></div>
+  <div class="confetti-container"></div>
+  <div class="welcome-modal glass" [ngClass]="{ 'thanks': showThanks }" (click)="$event.stopPropagation()">
+    <button *ngIf="showThanks" class="modal-close-btn" aria-label="Close" (click)="closeModal()">&times;</button>
+    <div class="floating-shape shape1"></div>
+    <div class="floating-shape shape2"></div>
+    <div class="floating-shape shape3"></div>
+    <ng-container *ngIf="!showThanks">
+      <h2 class="modal-title gradient-text">🎉 Welcome to My Portfolio!</h2>
+      <p class="modal-message body-content">We're excited to have you here. Please tell us your name and contact number for a personalized experience!</p>
+      <form [formGroup]="welcomeForm" (ngSubmit)="onSubmit()" class="welcome-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" formControlName="name" placeholder="Enter your name" [class.error]="submitted && welcomeForm.get('name')?.invalid" />
+          <div class="error-message" *ngIf="submitted && welcomeForm.get('name')?.invalid">Name is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="contact">Contact Number</label>
+          <input id="contact" type="text" formControlName="contact" maxlength="10" pattern="[0-9]*" inputmode="numeric" placeholder="Enter your 10-digit number" [class.error]="submitted && welcomeForm.get('contact')?.invalid" (input)="onContactInput($event)" />
+          <div class="error-message" *ngIf="submitted && welcomeForm.get('contact')?.invalid">
+            Contact number must be exactly 10 digits and only numbers are allowed.
+          </div>
+        </div>
+        <button type="submit" class="submit-btn gradient-bg">Let's Go 🚀</button>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="showThanks">
+      <h2 class="modal-title gradient-text">Thank you, {{ userName }}! 🎉</h2>
+      <p class="modal-message body-content">We're thrilled to have you here. Enjoy exploring the portfolio and feel free to reach out if you have any questions or feedback!</p>
+    </ng-container>
+  </div>
+</div> 

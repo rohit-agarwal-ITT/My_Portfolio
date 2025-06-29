@@ -47,8 +47,8 @@
       <div class="header-actions">
         <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
           <i class="fas" [class.fa-sun]="isDarkMode" [class.fa-moon]="!isDarkMode"></i>
-        </button>
-      </div>
+    </button>
+  </div>
   </div>
   </header>
 
@@ -89,7 +89,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer glass">
+  <footer class="footer glass" *ngIf="!isAdminRoute">
     <div class="footer-content">
       <div class="footer-section">
         <h3 class="gradient-text heading-main">Let's Connect!</h3>
@@ -156,4 +156,6 @@
   <button class="scroll-to-top" (click)="scrollToTop()" [class.visible]="showScrollToTop">
     <i class="fas fa-arrow-up"></i>
   </button>
+
+  <app-welcome-modal *ngIf="showWelcomeModal" (submitInfo)="onWelcomeSubmit($event)" (close)="onWelcomeClose()"></app-welcome-modal>
 </div>

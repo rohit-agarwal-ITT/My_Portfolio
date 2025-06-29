@@ -1,0 +1,56 @@
+.bottom-banner {
+  position: fixed;
+  right: 2vw;
+  bottom: 2vw;
+  z-index: 2100;
+  animation: slideInBanner 0.7s cubic-bezier(0.4,0.2,0.2,1);
+}
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--gradient-accent);
+  color: #fff;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-xl);
+  padding: 1.1rem 2rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  animation: pulseBanner 2s infinite;
+  position: relative;
+}
+.banner-icon {
+  font-size: 1.7rem;
+  margin-right: 0.5rem;
+}
+.banner-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-left: 1.2rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.banner-close:hover {
+  opacity: 1;
+}
+@media (max-width: 600px) {
+  .bottom-banner {
+    right: 1vw;
+    bottom: 1vw;
+  }
+  .banner-content {
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+  }
+}
+@keyframes slideInBanner {
+  from { transform: translateY(80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes pulseBanner {
+  0%, 100% { box-shadow: 0 0 16px 0 rgba(255, 193, 7, 0.18); }
+  50% { box-shadow: 0 0 32px 0 rgba(255, 193, 7, 0.28); }
+} 

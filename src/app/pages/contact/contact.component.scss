@@ -195,6 +195,36 @@
   opacity: 0.9;
 }
 
+/* Error Message */
+.error-message {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.error-icon {
+  font-size: 3rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+.error-content h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.error-content p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
 /* Contact Form */
 .contact-form {
   display: flex;
