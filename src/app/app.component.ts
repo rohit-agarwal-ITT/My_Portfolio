@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ConfigService } from './services/config.service';
 import { AuthService } from './services/auth.service';
@@ -70,7 +70,8 @@ export class AppComponent implements OnInit {
   constructor(
     private configService: ConfigService,
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -85,6 +86,13 @@ export class AppComponent implements OnInit {
     } else {
       this.showWelcomeModal = false;
     }
+
+    // Show access denied toast if redirected
+    this.route.queryParams.subscribe(params => {
+      if (params['denied']) {
+        this.showAccessDeniedToast();
+      }
+    });
   }
 
   private setupRouteDetection() {
@@ -207,5 +215,44 @@ export class AppComponent implements OnInit {
     this.authService.logout();
     this.showWelcomeModal = true;
     this.router.navigate(['/about']);
+  }
+
+  showAccessDeniedToast() {
+    const toast = document.createElement('div');
+    toast.textContent = 'Access Denied: You are not authorized to view the dashboard.';
+    toast.style.position = 'fixed';
+    toast.style.bottom = '2.5rem';
+    toast.style.right = '2.5rem';
+    toast.style.background = 'linear-gradient(90deg, #fce4ec 0%, #fcb7e7 100%)';
+    toast.style.color = '#d32f2f';
+    toast.style.fontWeight = '700';
+    toast.style.padding = '0.6rem 1.1rem 0.6rem 0.9rem';
+    toast.style.borderRadius = '1.1rem';
+    toast.style.boxShadow = '0 8px 32px rgba(244,67,54,0.13), 0 1.5px 8px 0 rgba(140, 82, 255, 0.10)';
+    toast.style.zIndex = '9999';
+    toast.style.fontSize = '0.97rem';
+    toast.style.letterSpacing = '0.01em';
+    toast.style.display = 'flex';
+    toast.style.alignItems = 'center';
+    toast.style.gap = '0.3rem';
+    toast.style.border = '1.5px solid #f44336';
+    (toast.style as any).backdropFilter = 'blur(6px)';
+    toast.style.transition = 'transform 0.35s cubic-bezier(.4,2,.6,1), opacity 0.25s';
+    toast.style.transform = 'translateY(60px)';
+    toast.style.opacity = '0';
+    toast.style.maxWidth = '320px';
+    toast.style.minWidth = '180px';
+    toast.style.whiteSpace = 'pre-line';
+
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.transform = 'translateY(0)';
+      toast.style.opacity = '1';
+    }, 50);
+    setTimeout(() => {
+      toast.style.transform = 'translateY(60px)';
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 350);
+    }, 4000);
   }
 }

@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
     if (user && user.role === 'admin') {
       return true;
     }
-    this.router.navigate(['/about']);
+    this.router.navigate(['/about'], { queryParams: { denied: '1' } });
     return false;
   }
 } 

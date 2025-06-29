@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-not-found',
   template: `
     <div class="not-found-container">
-      <h1>404</h1>
-      <p>Page Not Found</p>
+      <h1 *ngIf="!message">404</h1>
+      <h1 *ngIf="message">Access Denied</h1>
+      <p>{{ message || 'Page Not Found' }}</p>
       <a routerLink="/about" class="back-link">Go to Home</a>
     </div>
   `,
@@ -41,4 +42,6 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class NotFoundComponent {} 
+export class NotFoundComponent {
+  @Input() message?: string;
+} 
