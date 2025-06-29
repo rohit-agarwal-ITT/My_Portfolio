@@ -128,7 +128,7 @@ export class AppComponent implements OnInit {
 
   loadTheme() {
     const savedTheme = localStorage.getItem('theme');
-    this.isDarkMode = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    this.isDarkMode = savedTheme === 'dark' || !savedTheme;
     this.applyTheme();
   }
 

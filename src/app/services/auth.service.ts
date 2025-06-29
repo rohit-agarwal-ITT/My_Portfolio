@@ -18,6 +18,14 @@ export interface AdminCredentials {
   updatedAt: Date;
 }
 
+export interface RegularUser {
+  id: string;
+  name: string;
+  contact: string;
+  role: 'user';
+  createdAt: Date;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -129,6 +137,18 @@ export class AuthService {
       } else {
         // Regular user - save visitor info
         await this.saveVisitorInfo(name, contact);
+
+        // Set current user for regular user
+        const regularUser: RegularUser = {
+          id: 'visitor-' + Date.now(),
+          name: name,
+          contact: contact,
+          role: 'user',
+          createdAt: new Date()
+        };
+        localStorage.setItem('adminUser', JSON.stringify(regularUser));
+        this.currentUserSubject.next(regularUser as any);
+
         return { success: true, message: 'Welcome to my portfolio!', isAdmin: false };
       }
     } catch (error) {

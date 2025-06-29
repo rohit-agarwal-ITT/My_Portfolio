@@ -42,24 +42,24 @@
           <i class="fas fa-envelope"></i>
           <span class="meta-label">Contact</span>
         </a>
-        <a routerLink="/admin" routerLinkActive="active" class="nav-link admin-link" *ngIf="authService.isAuthenticated$ | async">
+        <a routerLink="/admin" routerLinkActive="active" class="nav-link admin-link" *ngIf="(currentUser$ | async)?.role === 'admin'">
           <i class="fas fa-chart-line"></i>
-          <span class="meta-label">Admin</span>
+          <span class="meta-label">Dashboard</span>
         </a>
       </nav>
 
-      <div class="header-actions user-actions-vertical">
-        <span class="user-name" *ngIf="currentUser$ | async as user">
-          <i class="fas fa-user-circle"></i> {{ user.name }}
-        </span>
-        <div class="user-buttons-row">
+      <div class="header-actions user-buttons-row">
+        <ng-container *ngIf="currentUser$ | async as user">
+          <span class="welcome-pill">
+            <span class="welcome-user-text">Welcome {{ user.name }}</span>
+            <button class="exit-icon-btn" (click)="exitUser()" title="Exit">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </span>
           <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
             <i class="fas" [class.fa-sun]="isDarkMode" [class.fa-moon]="!isDarkMode"></i>
           </button>
-          <button class="exit-btn" (click)="exitUser()" title="Exit">
-            <i class="fas fa-sign-out-alt"></i> Exit
-          </button>
-        </div>
+        </ng-container>
       </div>
     </div>
   </header>
@@ -86,8 +86,8 @@
       <a routerLink="/contact" routerLinkActive="active" (click)="closeMobileMenu()">
         <i class="fas fa-envelope"></i> Contact
       </a>
-      <a routerLink="/admin" routerLinkActive="active" (click)="closeMobileMenu()" *ngIf="authService.isAuthenticated$ | async">
-        <i class="fas fa-chart-line"></i> Admin
+      <a routerLink="/admin" routerLinkActive="active" (click)="closeMobileMenu()" *ngIf="(currentUser$ | async)?.role === 'admin'">
+        <i class="fas fa-chart-line"></i> Dashboard
       </a>
     </nav>
     <div class="sidebar-footer">

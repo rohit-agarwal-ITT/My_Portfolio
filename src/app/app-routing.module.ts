@@ -6,6 +6,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { AuthGuard } from './guards/auth.guard';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'about', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'projects', component: ProjectsComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent },
 ];
 
 const routerOptions: ExtraOptions = {

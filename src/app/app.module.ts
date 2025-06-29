@@ -17,6 +17,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { WelcomeModalComponent } from './components/welcome-modal/welcome-modal.component';
 import { BottomRightBannerComponent } from './components/bottom-right-banner/bottom-right-banner.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AdminComponent } from './pages/admin/admin.component';
     ContactComponent,
     WelcomeModalComponent,
     BottomRightBannerComponent,
-    AdminComponent
+    AdminComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
