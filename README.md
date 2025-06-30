@@ -1,219 +1,115 @@
-# Modern Angular Portfolio
+# Angular Portfolio
 
-A beautiful, responsive, and modern portfolio website built with Angular. Features a dark/light theme, smooth animations, and a professional design perfect for showcasing your skills and experience.
-
-## ✨ Features
-
-- **Modern Design**: Clean, professional UI with glass morphism effects
-- **Responsive**: Works perfectly on desktop, tablet, and mobile devices
-- **Dark/Light Theme**: Automatic theme switching based on system preferences
-- **Smooth Animations**: Engaging transitions and hover effects
-- **Interactive Skills**: Detailed skill information with proficiency levels
-- **Project Showcase**: Flipping cards to display project details
-- **Contact Form**: Integrated contact form with EmailJS
-- **Resume Download**: Direct PDF download functionality
-- **Fully Customizable**: Easy to customize with JSON configuration files
-
-## 🛠️ Environment Requirements
-
-### Prerequisites
-- **Node.js**: Version 16.x or higher (Recommended: 16.16.0+)
-- **npm**: Version 8.x or higher (Recommended: 8.19.3+)
-- **Angular CLI**: Version 15.2.11
-- **Git**: For cloning the repository
-
-### System Requirements
-- **Operating System**: Windows 10/11, macOS 10.15+, or Linux
-- **RAM**: Minimum 4GB (Recommended: 8GB+)
-- **Storage**: At least 2GB free space
-- **Browser**: Modern browser with ES6+ support (Chrome, Firefox, Safari, Edge)
-
-## 🚀 Installation & Setup
-
-### Step 1: Install Node.js
-1. **Download Node.js** from [nodejs.org](https://nodejs.org/)
-2. **Choose LTS version** (Recommended: 16.x or 18.x)
-3. **Run the installer** and follow the setup wizard
-4. **Verify installation**:
-   ```bash
-   node --version
-   npm --version
-   ```
-
-### Step 2: Install Angular CLI
-```bash
-npm install -g @angular/cli@15.2.11
-```
-
-**Verify installation**:
-```bash
-ng version
-```
-
-### Step 3: Clone the Repository
-```bash
-git clone <repository-url>
-cd portfolio
-```
-
-### Step 4: Install Dependencies
-```bash
-npm install
-```
-
-### Step 5: Customize Your Data
-1. **Update personal information**: Edit `src/assets/data/personal-info.json`
-2. **Add your skills**: Modify `src/assets/data/skills.json`
-3. **Update projects**: Edit `src/assets/data/projects.json`
-4. **Add education**: Modify `src/assets/data/education.json`
-5. **Configure settings**: Update `src/assets/data/config.json`
-
-### Step 6: Replace Assets
-1. **Profile Picture**: Replace `src/assets/profile_pic.jpg` with your photo
-2. **Resume PDF**: Replace `src/assets/Rohit_Agarwal_ITT_Resume.pdf` with your resume
-
-### Step 7: Run the Application
-```bash
-ng serve
-```
-
-### Step 8: Open in Browser
-Navigate to `http://localhost:4200/`
-
-## 🎨 Customization
-
-This portfolio is designed to be easily customizable. You only need to modify JSON files to create your own portfolio:
-
-- **Personal Info**: `src/assets/data/personal-info.json`
-- **Skills**: `src/assets/data/skills.json`
-- **Projects**: `src/assets/data/projects.json`
-- **Education**: `src/assets/data/education.json`
-- **Configuration**: `src/assets/data/config.json`
-
-For detailed customization instructions, see the [Customization Guide](./CUSTOMIZATION.md).
-
-## 🛠️ Built With
-
-- **Angular 15.2.0**: Modern web framework
-- **TypeScript 4.9.4**: Type-safe JavaScript
-- **SCSS**: Advanced CSS with variables and mixins
-- **EmailJS**: Contact form integration
-- **Font Awesome**: Icon library
-- **Google Fonts**: Typography
-
-## 📱 Pages
-
-- **About**: Personal information and professional summary
-- **Skills**: Interactive skills showcase with categories
-- **Projects**: Work experience with detailed project information
-- **Contact**: Contact form and social links
-
-## 🎯 Key Features
-
-### Skills Section
-- Categorized skills with proficiency levels
-- Interactive skill cards with detailed information
-- Modal popups for additional details
-- Animated progress bars
-
-### Projects Section
-- Flipping cards for project details
-- Professional experience showcase
-- Responsive grid layout
-- Smooth hover animations
-
-### Theme System
-- Automatic dark/light theme detection
-- Manual theme toggle
-- Consistent color scheme across components
-- Smooth theme transitions
-
-## 📦 Build
-
-```bash
-# Development build
-ng build
-
-# Production build
-ng build --configuration production
-```
-
-## 🧪 Testing
-
-```bash
-# Unit tests
-ng test
-
-# End-to-end tests
-ng e2e
-```
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-1. **Node.js Version Issues**
-   ```bash
-   # Check your Node.js version
-   node --version
-   
-   # If version is too old, update Node.js
-   # Download from nodejs.org or use nvm
-   ```
-
-2. **Angular CLI Issues**
-   ```bash
-   # Uninstall global Angular CLI
-   npm uninstall -g @angular/cli
-   
-   # Install the correct version
-   npm install -g @angular/cli@15.2.11
-   ```
-
-3. **Dependency Issues**
-   ```bash
-   # Clear npm cache
-   npm cache clean --force
-   
-   # Delete node_modules and reinstall
-   rm -rf node_modules package-lock.json
-   npm install
-   ```
-
-4. **Port Already in Use**
-   ```bash
-   # Use a different port
-   ng serve --port 4201
-   ```
-
-5. **Build Errors**
-   ```bash
-   # Clear Angular cache
-   ng cache clean
-   
-   # Rebuild
-   ng build --configuration production
-   ```
-
-### Getting Help
-
-- **Check browser console** for JavaScript errors
-- **Validate JSON files** using [JSONLint](https://jsonlint.com/)
-- **Check file paths** in configuration files
-- **Ensure all required fields** are present in JSON files
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📞 Support
-
-If you have any questions or need help with customization, please open an issue on GitHub.
+A modern, customizable portfolio web app built with Angular. Showcases your skills, projects, experience, and more, with a beautiful responsive design and dark/light mode support.
 
 ---
 
-**Note**: This portfolio template is designed to be easily reusable. Simply update the JSON files to create your own professional portfolio!
+## 🚀 Features
+- Responsive, mobile-friendly design
+- Dark and light mode with smooth switching
+- Easy customization via JSON files (no code required)
+- Animated UI, modals, and micro-interactions
+- Admin dashboard for visitor analytics (optional)
+- Dynamic browser title and resume download
+- Modular Angular architecture
+
+---
+
+## 🛠️ Tech Stack
+- **Angular** (v15+ recommended)
+- **Node.js** (v16+ recommended)
+- **Angular CLI**
+- **RxJS**, **SCSS**, **FontAwesome**
+
+---
+
+## ⚡ Prerequisites
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- [Angular CLI](https://angular.io/cli) (`npm install -g @angular/cli`)
+- Git (to clone the repo)
+
+---
+
+## 📦 Installation
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd <your-repo-folder>
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   cd portfolio
+   npm install
+   ```
+
+---
+
+## 🖥️ Running Locally
+1. **Start the Angular app:**
+   ```bash
+   cd portfolio
+   ng serve
+   # or
+   npm start
+   ```
+2. **Open your browser:**
+   - Visit [http://localhost:4200](http://localhost:4200)
+
+---
+
+## 🏗️ Building for Production
+```bash
+cd portfolio
+ng build --configuration production
+```
+The output will be in `portfolio/dist/`.
+
+---
+
+## ⚙️ Environment Setup
+- No special environment variables are required for basic use.
+- If using Firebase or other APIs, update `src/environments/environment.ts` as needed.
+- All editable content (profile, skills, projects, etc.) is in `src/assets/data/` as JSON files.
+
+---
+
+## 📝 Customization
+- See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for a full guide.
+- **Edit JSON files:**
+  - `src/assets/data/personal-info.json` — your name, contact, social links
+  - `src/assets/data/skills.json` — your skills
+  - `src/assets/data/projects.json` — your projects
+  - `src/assets/data/education.json` — your education
+  - `src/assets/data/config.json` — app title, theme, etc.
+- **Replace assets:**
+  - `src/assets/profile_pic.jpg` — your photo
+  - `src/assets/Rohit_Agarwal_ITT_Resume.pdf` — your resume
+- **Change theme:**
+  - Edit colors in `src/styles.scss` or `config.json`
+
+---
+
+## 🧩 Architecture & Techniques
+- **Angular best practices:** modular components, services, guards
+- **Theming:** CSS variables, `[data-theme]` attribute for dark/light mode
+- **Data loading:** All content loaded from JSON for easy editing
+- **Admin dashboard:** (optional) for visitor analytics, protected by login
+
+---
+
+## 🛠️ Troubleshooting
+- **Port already in use:** Stop other apps using port 4200 or run `ng serve --port 4300`
+- **Missing dependencies:** Run `npm install` in both root and `portfolio/` folders
+- **CORS or API errors:** Check your environment and API keys
+- **App not updating:** Try a hard refresh (Ctrl+F5) or clear browser cache
+
+---
+
+## 🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first.
+
+---
+
+## 📬 Contact
+For help or questions, open an issue or contact the maintainer.
