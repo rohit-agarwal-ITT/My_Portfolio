@@ -16,6 +16,8 @@ export class WelcomeModalComponent implements OnInit {
   userName = '';
   isSaving = false;
   isAdmin = false;
+  showForm = false;
+  showOptions = true;
 
   constructor(
     private fb: FormBuilder, 
@@ -32,44 +34,58 @@ export class WelcomeModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.triggerConfettiBurst();
+  ngOnInit() {
+    this.renderer.addClass(document.body, 'modal-open');
   }
 
-  triggerConfettiBurst() {
-    const confettiColors = [
-      '#fffbe6', '#ffe082', '#fbc2eb', '#ffb347', '#ff5e62', '#a18cd1', '#fbc2eb', '#f9d423', '#fcb69f', '#fd6e6a'
-    ];
-    const confettiContainer = this.el.nativeElement.querySelector('.confetti-container');
-    if (!confettiContainer) return;
-    for (let i = 0; i < 32; i++) {
-      const confetti = this.renderer.createElement('div');
-      this.renderer.addClass(confetti, 'confetti');
-      const size = 8 + Math.random() * 10;
-      this.renderer.setStyle(confetti, 'width', `${size}px`);
-      this.renderer.setStyle(confetti, 'height', `${size * (0.4 + Math.random() * 0.8)}px`);
-      this.renderer.setStyle(confetti, 'background', confettiColors[Math.floor(Math.random() * confettiColors.length)]);
-      this.renderer.setStyle(confetti, 'borderRadius', `${Math.random() > 0.5 ? '50%' : '2px'}`);
-      this.renderer.setStyle(confetti, 'position', 'absolute');
-      this.renderer.setStyle(confetti, 'left', '50%');
-      this.renderer.setStyle(confetti, 'top', '50%');
-      this.renderer.setStyle(confetti, 'opacity', '0.85');
-      const angle = Math.random() * 2 * Math.PI;
-      const velocity = 80 + Math.random() * 120;
-      const dx = Math.cos(angle) * velocity;
-      const dy = Math.sin(angle) * velocity;
-      const rotate = Math.random() * 360;
-      this.renderer.setStyle(confetti, 'transform', `translate(-50%, -50%) rotate(${rotate}deg)`);
-      this.renderer.appendChild(confettiContainer, confetti);
-      setTimeout(() => {
-        this.renderer.setStyle(confetti, 'transition', 'transform 1.1s cubic-bezier(.61,1.13,.66,1), opacity 1.1s');
-        this.renderer.setStyle(confetti, 'transform', `translate(${dx}px, ${dy}px) rotate(${rotate + 180}deg)`);
-        this.renderer.setStyle(confetti, 'opacity', '0');
-      }, 10);
-      setTimeout(() => {
-        this.renderer.removeChild(confettiContainer, confetti);
-      }, 1200);
+  ngOnDestroy() {
+    this.renderer.removeClass(document.body, 'modal-open');
+  }
+
+  onBackdropClick(event: Event) {
+    if (event.target === event.currentTarget) {
+      this.closeModal();
     }
+  }
+
+  closeModal() {
+    this.close.emit();
+  }
+
+  // Handle anonymous browsing option
+  async onAnonymousBrowse() {
+    this.isSaving = true;
+    
+    try {
+      // Initialize anonymous visitor tracking
+      await this.authService.initializeAnonymousVisitor();
+      
+      this.userName = 'Guest';
+      this.isAdmin = false;
+      this.showThanks = true;
+      
+      // Store that user has visited
+      localStorage.setItem('visitedPortfolio', 'true');
+    } catch (error) {
+      console.error('Error in anonymous browsing:', error);
+      // Still show thanks even if there's an error
+      this.userName = 'Guest';
+      this.showThanks = true;
+      localStorage.setItem('visitedPortfolio', 'true');
+    } finally {
+      this.isSaving = false;
+    }
+  }
+
+  // Handle option to provide information
+  onProvideInfo() {
+    this.showOptions = false;
+    this.showForm = true;
+  }
+
+  // Handle skip option (same as anonymous)
+  onSkip() {
+    this.onAnonymousBrowse();
   }
 
   async onSubmit() {
@@ -113,16 +129,6 @@ export class WelcomeModalComponent implements OnInit {
         this.isSaving = false;
       }
     }
-  }
-
-  onBackdropClick(event: MouseEvent) {
-    // Do not close the modal in thank you state
-    // Only allow closing via the cross icon
-    return;
-  }
-
-  closeModal() {
-    this.close.emit();
   }
 
   onContactInput(event: Event) {

@@ -899,4 +899,50 @@
 .warning-message strong {
   color: #f44336;
   font-weight: 700;
+}
+
+.anonymous-visitor {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.anonymous-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.visit-count {
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.device-type {
+  font-size: 0.8rem;
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-md);
+}
+
+.anonymous-text {
+  color: var(--text-secondary);
+  font-style: italic;
 } 

@@ -123,6 +123,34 @@
               {{ getErrorMessage('message') }}
             </div>
           </div>
+
+          <!-- Optional tracking section for anonymous users -->
+          <div class="tracking-section" *ngIf="isAnonymousUser">
+            <div class="tracking-header">
+              <i class="fas fa-user-secret"></i>
+              <h4>Optional: Share Your Info</h4>
+            </div>
+            <p class="tracking-description">
+              I noticed you're browsing anonymously. If you'd like me to remember you for future visits, 
+              you can optionally provide your contact number below. This helps me provide a more personalized experience.
+            </p>
+            <div class="form-group">
+              <label for="contact">Contact Number (Optional)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-phone input-icon"></i>
+                <input 
+                  id="contact"
+                  type="text" 
+                  formControlName="contact"
+                  placeholder="Enter your 10-digit contact number" 
+                  maxlength="10"
+                  pattern="[0-9]*"
+                  inputmode="numeric"
+                  (input)="onContactInput($event)"
+                />
+              </div>
+            </div>
+          </div>
           
           <button type="submit" class="submit-btn" [disabled]="isSubmitting || contactForm.invalid">
             <div class="btn-content">

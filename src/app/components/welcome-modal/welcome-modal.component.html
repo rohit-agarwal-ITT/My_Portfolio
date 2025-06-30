@@ -6,9 +6,44 @@
     <div class="floating-shape shape1"></div>
     <div class="floating-shape shape2"></div>
     <div class="floating-shape shape3"></div>
-    <ng-container *ngIf="!showThanks">
+    
+    <!-- Options Screen -->
+    <ng-container *ngIf="!showThanks && showOptions">
       <h2 class="modal-title gradient-text">🎉 Welcome to My Portfolio!</h2>
-      <p class="modal-message body-content">We're excited to have you here. Please tell us your name and contact number for a personalized experience!</p>
+      <p class="modal-message body-content">I'm excited to have you here! How would you like to explore my portfolio?</p>
+      
+      <div class="welcome-options">
+        <button class="option-btn primary-option" (click)="onAnonymousBrowse()" [disabled]="isSaving">
+          <div class="option-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div class="option-content">
+            <h3>Browse Anonymously</h3>
+            <p>Explore freely without sharing personal information</p>
+          </div>
+        </button>
+        
+        <button class="option-btn secondary-option" (click)="onProvideInfo()" [disabled]="isSaving">
+          <div class="option-icon">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <div class="option-content">
+            <h3>Share Your Info</h3>
+            <p>Get a personalized experience and stay connected</p>
+          </div>
+        </button>
+        
+        <button class="option-btn skip-option" (click)="onSkip()" [disabled]="isSaving">
+          <span>Skip for now</span>
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- Form Screen -->
+    <ng-container *ngIf="!showThanks && showForm">
+      <h2 class="modal-title gradient-text">📝 Tell Me About Yourself</h2>
+      <p class="modal-message body-content">Share your details for a personalized experience (optional but appreciated!)</p>
+      
       <form [formGroup]="welcomeForm" (ngSubmit)="onSubmit()" class="welcome-form">
         <div class="form-group">
           <label for="name">Name</label>
@@ -22,20 +57,30 @@
             Contact number must be exactly 10 digits and only numbers are allowed.
           </div>
         </div>
-        <button type="submit" class="submit-btn gradient-bg" [disabled]="isSaving">
-          <span *ngIf="!isSaving">Let's Go 🚀</span>
-          <span *ngIf="isSaving">Processing...</span>
-        </button>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn gradient-bg" [disabled]="isSaving">
+            <span *ngIf="!isSaving">Let's Go 🚀</span>
+            <span *ngIf="isSaving">Processing...</span>
+          </button>
+          <button type="button" class="back-btn" (click)="showOptions = true; showForm = false">
+            <i class="fas fa-arrow-left"></i>
+            Back to Options
+          </button>
+        </div>
       </form>
     </ng-container>
+
+    <!-- Thanks Screen -->
     <ng-container *ngIf="showThanks">
       <h2 class="modal-title gradient-text">
         <span *ngIf="isAdmin">Welcome back, {{ userName }}! 👑</span>
-        <span *ngIf="!isAdmin">Thank you, {{ userName }}! 🎉</span>
+        <span *ngIf="!isAdmin && userName !== 'Guest'">Thank you, {{ userName }}! 🎉</span>
+        <span *ngIf="!isAdmin && userName === 'Guest'">Welcome, Guest! 🎉</span>
       </h2>
       <p class="modal-message body-content">
         <span *ngIf="isAdmin">Admin access granted! You can now access the admin dashboard to view visitor analytics.</span>
-        <span *ngIf="!isAdmin">We're thrilled to have you here. Enjoy exploring the portfolio and feel free to reach out if you have any questions or feedback!</span>
+        <span *ngIf="!isAdmin && userName !== 'Guest'">We're thrilled to have you here. Enjoy exploring the portfolio and feel free to reach out if you have any questions or feedback!</span>
+        <span *ngIf="!isAdmin && userName === 'Guest'">Feel free to explore my portfolio! You can always share your information later through the contact form if you'd like to connect.</span>
       </p>
     </ng-container>
   </div>

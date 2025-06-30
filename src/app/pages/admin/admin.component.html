@@ -36,16 +36,8 @@
             <span class="credential-value">{{ currentCredentials?.name || 'Not set' }}</span>
           </div>
           <div class="credential-row">
-            <label>Contact Number:</label>
+            <label>Contact:</label>
             <span class="credential-value">{{ currentCredentials?.contact || 'Not set' }}</span>
-          </div>
-          <div class="credential-row" *ngIf="currentCredentials?.createdAt">
-            <label>Created:</label>
-            <span class="credential-value">{{ formatDate(currentCredentials?.createdAt) }}</span>
-          </div>
-          <div class="credential-row" *ngIf="currentCredentials?.updatedAt">
-            <label>Last Updated:</label>
-            <span class="credential-value">{{ formatDate(currentCredentials?.updatedAt) }}</span>
           </div>
         </div>
 
@@ -105,8 +97,28 @@
           <i class="fas fa-users"></i>
         </div>
         <div class="stat-content">
-          <h3 class="stat-number">{{ (visitors$ | async)?.length || 0 }}</h3>
-          <p class="stat-label">Total Visitors</p>
+          <h3 class="stat-number">{{ visitorStats.totalVisitors }}</h3>
+          <p class="stat-label">Total Visits</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-user-secret"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">{{ visitorStats.anonymousVisitors }}</h3>
+          <p class="stat-label">Anonymous Visitors</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">{{ visitorStats.namedVisitors }}</h3>
+          <p class="stat-label">Named Visitors</p>
         </div>
       </div>
 
@@ -115,8 +127,18 @@
           <i class="fas fa-clock"></i>
         </div>
         <div class="stat-content">
-          <h3 class="stat-number">{{ getTodayVisitorsCount((visitors$ | async) || []) }}</h3>
-          <p class="stat-label">Today's Visitors</p>
+          <h3 class="stat-number">{{ visitorStats.todayVisitors }}</h3>
+          <p class="stat-label">Today's Visits</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-fingerprint"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">{{ visitorStats.uniqueVisitors }}</h3>
+          <p class="stat-label">Unique Visitors</p>
         </div>
       </div>
     </div>
@@ -131,7 +153,7 @@
           </div>
           <button 
             class="delete-all-btn" 
-            (click)="deleteAllVisitors()" 
+            (click)="showDeleteAllConfirmation()" 
             *ngIf="!loading && ((visitors$ | async)?.length || 0) > 0"
             [disabled]="deletingAll"
             type="button"
@@ -152,8 +174,15 @@
         <div class="visitor-card" *ngFor="let visitor of visitors$ | async" (click)="selectVisitor(visitor)">
           <div class="visitor-header">
             <div class="visitor-info">
-              <h3 class="visitor-name">{{ visitor.name }}</h3>
-              <p class="visitor-mobile">{{ visitor.mobile }}</p>
+              <h3 class="visitor-name">
+                <span *ngIf="visitor.name">{{ visitor.name }}</span>
+                <span *ngIf="!visitor.name" class="anonymous-visitor">Anonymous Visitor</span>
+                <span *ngIf="visitor.isAnonymous" class="anonymous-badge">
+                  <i class="fas fa-user-secret"></i>
+                </span>
+              </h3>
+              <p class="visitor-mobile" *ngIf="visitor.mobile">{{ visitor.mobile }}</p>
+              <p class="visitor-mobile" *ngIf="!visitor.mobile">No contact info</p>
             </div>
             <div class="visitor-actions">
               <button class="action-btn view-btn" (click)="selectVisitor(visitor); $event.stopPropagation()">
@@ -170,6 +199,14 @@
               <span class="device-info">
                 <i class="fas fa-mobile-alt"></i>
                 {{ getDeviceInfo(visitor.userAgent || '') }}
+              </span>
+              <span class="visit-count" *ngIf="visitor.visitCount && visitor.visitCount > 1">
+                <i class="fas fa-redo"></i>
+                {{ visitor.visitCount }} visits
+              </span>
+              <span class="device-type" *ngIf="visitor.deviceType">
+                <i class="fas fa-desktop"></i>
+                {{ visitor.deviceType }}
               </span>
             </div>
           </div>
@@ -205,11 +242,15 @@
         <div class="detail-row">
           <label>Name:</label>
           <div class="detail-value">
-            <strong>{{ selectedVisitor.name }}</strong>
+            <strong *ngIf="selectedVisitor.name">{{ selectedVisitor.name }}</strong>
+            <span *ngIf="!selectedVisitor.name" class="anonymous-text">Anonymous Visitor</span>
+            <span *ngIf="selectedVisitor.isAnonymous" class="anonymous-badge">
+              <i class="fas fa-user-secret"></i> Anonymous
+            </span>
           </div>
         </div>
         
-        <div class="detail-row">
+        <div class="detail-row" *ngIf="selectedVisitor.mobile">
           <label>Mobile:</label>
           <div class="detail-value">{{ selectedVisitor.mobile }}</div>
         </div>
@@ -217,6 +258,36 @@
         <div class="detail-row">
           <label>Device:</label>
           <div class="detail-value">{{ getDeviceInfo(selectedVisitor.userAgent || '') }}</div>
+        </div>
+        
+        <div class="detail-row" *ngIf="selectedVisitor.deviceType">
+          <label>Device Type:</label>
+          <div class="detail-value">{{ selectedVisitor.deviceType }}</div>
+        </div>
+        
+        <div class="detail-row" *ngIf="selectedVisitor.screenResolution">
+          <label>Screen Resolution:</label>
+          <div class="detail-value">{{ selectedVisitor.screenResolution }}</div>
+        </div>
+        
+        <div class="detail-row" *ngIf="selectedVisitor.timezone">
+          <label>Timezone:</label>
+          <div class="detail-value">{{ selectedVisitor.timezone }}</div>
+        </div>
+        
+        <div class="detail-row" *ngIf="selectedVisitor.language">
+          <label>Language:</label>
+          <div class="detail-value">{{ selectedVisitor.language }}</div>
+        </div>
+        
+        <div class="detail-row" *ngIf="selectedVisitor.visitCount">
+          <label>Visit Count:</label>
+          <div class="detail-value">{{ selectedVisitor.visitCount }}</div>
+        </div>
+        
+        <div class="detail-row" *ngIf="selectedVisitor.referrer">
+          <label>Referrer:</label>
+          <div class="detail-value">{{ selectedVisitor.referrer }}</div>
         </div>
         
         <div class="detail-row">

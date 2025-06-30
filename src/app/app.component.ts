@@ -85,6 +85,8 @@ export class AppComponent implements OnInit {
       this.showWelcomeModal = true;
     } else {
       this.showWelcomeModal = false;
+      // Initialize anonymous visitor tracking for returning users
+      this.initializeAnonymousTracking();
     }
 
     // Show access denied toast if redirected
@@ -254,5 +256,17 @@ export class AppComponent implements OnInit {
       toast.style.opacity = '0';
       setTimeout(() => toast.remove(), 350);
     }, 4000);
+  }
+
+  private async initializeAnonymousTracking(): Promise<void> {
+    try {
+      // Only track if user is not already authenticated
+      const currentUser = this.authService.getCurrentUser();
+      if (!currentUser) {
+        await this.authService.initializeAnonymousVisitor();
+      }
+    } catch (error) {
+      console.error('Error initializing anonymous tracking:', error);
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { VisitorService } from './visitor.service';
 
 export interface AdminUser {
   id: string;
@@ -11,30 +11,41 @@ export interface AdminUser {
   createdAt: Date;
 }
 
+export interface RegularUser {
+  id: string;
+  name?: string;
+  contact?: string;
+  role: 'user';
+  createdAt: Date;
+  isAnonymous?: boolean;
+}
+
+export interface AnonymousUser {
+  id: string;
+  role: 'anonymous';
+  createdAt: Date;
+  sessionId: string;
+  browserFingerprint: string;
+}
+
+export type User = AdminUser | RegularUser | AnonymousUser;
+
 export interface AdminCredentials {
   name: string;
   contact: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface RegularUser {
-  id: string;
-  name: string;
-  contact: string;
-  role: 'user';
-  createdAt: Date;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<AdminUser | null>(null);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  public isAuthenticated$ = this.currentUser$.pipe(map(user => !!user));
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(
+    private firestore: AngularFirestore,
+    private visitorService: VisitorService
+  ) {
     this.loadStoredUser();
   }
 
@@ -51,47 +62,40 @@ export class AuthService {
     }
   }
 
-  private async getAdminCredentials(): Promise<AdminCredentials | null> {
+  // Initialize anonymous visitor tracking
+  async initializeAnonymousVisitor(): Promise<void> {
     try {
-      const credentialsDoc = await this.firestore
-        .collection('admin_credentials')
-        .doc('default')
-        .get()
-        .toPromise();
-
-      if (credentialsDoc?.exists) {
-        return credentialsDoc.data() as AdminCredentials;
+      await this.visitorService.trackAnonymousVisitor();
+      
+      const sessionId = localStorage.getItem('visitorSessionId');
+      const browserFingerprint = localStorage.getItem('visitorFingerprint');
+      
+      if (sessionId && browserFingerprint) {
+        const anonymousUser: AnonymousUser = {
+          id: 'anonymous-' + Date.now(),
+          role: 'anonymous',
+          createdAt: new Date(),
+          sessionId: sessionId,
+          browserFingerprint: browserFingerprint
+        };
+        
+        localStorage.setItem('adminUser', JSON.stringify(anonymousUser));
+        this.currentUserSubject.next(anonymousUser);
       }
-      return null;
     } catch (error) {
-      console.error('Error fetching admin credentials:', error);
-      return null;
+      console.error('Error initializing anonymous visitor:', error);
     }
   }
 
-  async setAdminCredentials(name: string, contact: string): Promise<{ success: boolean; message: string }> {
+  // Authenticate user (now optional for regular users)
+  async authenticateUser(name?: string, contact?: string): Promise<{ success: boolean; message: string; isAdmin: boolean }> {
     try {
-      const credentials: AdminCredentials = {
-        name: name,
-        contact: contact,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
+      // If no name/contact provided, treat as anonymous
+      if (!name || !contact) {
+        await this.initializeAnonymousVisitor();
+        return { success: true, message: 'Welcome to my portfolio!', isAdmin: false };
+      }
 
-      await this.firestore
-        .collection('admin_credentials')
-        .doc('default')
-        .set(credentials);
-
-      return { success: true, message: 'Admin credentials updated successfully' };
-    } catch (error) {
-      console.error('Error setting admin credentials:', error);
-      return { success: false, message: 'Failed to update admin credentials' };
-    }
-  }
-
-  async authenticateUser(name: string, contact: string): Promise<{ success: boolean; message: string; isAdmin: boolean }> {
-    try {
       // Get admin credentials from Firestore
       const adminCredentials = await this.getAdminCredentials();
       
@@ -144,7 +148,8 @@ export class AuthService {
           name: name,
           contact: contact,
           role: 'user',
-          createdAt: new Date()
+          createdAt: new Date(),
+          isAnonymous: false
         };
         localStorage.setItem('adminUser', JSON.stringify(regularUser));
         this.currentUserSubject.next(regularUser as any);
@@ -157,90 +162,87 @@ export class AuthService {
     }
   }
 
-  private async saveVisitorInfo(name: string, contact: string): Promise<void> {
+  // Save visitor info with optional personal details
+  private async saveVisitorInfo(name?: string, contact?: string): Promise<void> {
     try {
-      await this.firestore.collection('visitors').add({
-        name: name,
-        mobile: contact,
+      const visitorData: any = {
         timestamp: new Date(),
         userAgent: navigator.userAgent
-      });
+      };
+
+      if (name) visitorData.name = name;
+      if (contact) visitorData.mobile = contact;
+
+      await this.visitorService.saveVisitorInfo(visitorData);
     } catch (error) {
       console.error('Error saving visitor info:', error);
     }
   }
 
+  // Get admin credentials
+  private async getAdminCredentials(): Promise<AdminCredentials | null> {
+    try {
+      const doc = await this.firestore.collection('admin_credentials').doc('default').get().toPromise();
+      return doc?.exists ? doc.data() as AdminCredentials : null;
+    } catch (error) {
+      console.error('Error getting admin credentials:', error);
+      return null;
+    }
+  }
+
+  // Set admin credentials
+  private async setAdminCredentials(name: string, contact: string): Promise<void> {
+    try {
+      await this.firestore.collection('admin_credentials').doc('default').set({
+        name: name,
+        contact: contact
+      });
+    } catch (error) {
+      console.error('Error setting admin credentials:', error);
+    }
+  }
+
+  // Update admin credentials
+  async updateAdminCredentials(name: string, contact: string): Promise<boolean> {
+    try {
+      await this.setAdminCredentials(name, contact);
+      return true;
+    } catch (error) {
+      console.error('Error updating admin credentials:', error);
+      return false;
+    }
+  }
+
+  // Logout user
   logout(): void {
     localStorage.removeItem('adminUser');
     this.currentUserSubject.next(null);
   }
 
-  getCurrentUser(): AdminUser | null {
+  // Get current user
+  getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
 
+  // Check if user is admin
   isAdmin(): boolean {
     const user = this.getCurrentUser();
     return user?.role === 'admin';
   }
 
+  // Check if user is anonymous
+  isAnonymous(): boolean {
+    const user = this.getCurrentUser();
+    return user?.role === 'anonymous';
+  }
+
+  // Check if user is authenticated (has any role)
+  isAuthenticated(): boolean {
+    return this.getCurrentUser() !== null;
+  }
+
+  // Get current admin credentials
   async getCurrentAdminCredentials(): Promise<AdminCredentials | null> {
     return await this.getAdminCredentials();
-  }
-
-  async updateAdminCredentials(name: string, contact: string): Promise<{ success: boolean; message: string }> {
-    try {
-      const credentials: AdminCredentials = {
-        name: name,
-        contact: contact,
-        createdAt: new Date(), // This will be overwritten with existing creation date
-        updatedAt: new Date()
-      };
-
-      // Get existing credentials to preserve creation date
-      const existing = await this.getAdminCredentials();
-      if (existing) {
-        credentials.createdAt = existing.createdAt;
-      }
-
-      await this.firestore
-        .collection('admin_credentials')
-        .doc('default')
-        .set(credentials);
-
-      return { success: true, message: 'Admin credentials updated successfully' };
-    } catch (error) {
-      console.error('Error updating admin credentials:', error);
-      return { success: false, message: 'Failed to update admin credentials' };
-    }
-  }
-
-  async createAdminAccount(email: string, password: string, name: string): Promise<{ success: boolean; message: string }> {
-    try {
-      // Check if admin already exists
-      const existingAdmin = await this.firestore
-        .collection('admins', ref => ref.where('email', '==', email))
-        .get()
-        .toPromise();
-
-      if (!existingAdmin?.empty) {
-        return { success: false, message: 'Admin account already exists' };
-      }
-
-      // Create new admin account
-      const adminData = {
-        email: email,
-        password: password, // In production, this should be hashed
-        name: name,
-        role: 'admin',
-        createdAt: new Date()
-      };
-
-      await this.firestore.collection('admins').add(adminData);
-      return { success: true, message: 'Admin account created successfully' };
-    } catch (error) {
-      console.error('Error creating admin account:', error);
-      return { success: false, message: 'Failed to create admin account' };
-    }
   }
 } 
